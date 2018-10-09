@@ -1,0 +1,12 @@
+<p>
+  menu works!
+</p>
+<mat-list>
+  <mat-list-item *ngFor="let feature of features">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(feature) : null; clicked()"
+                            [checked]="selection.isSelected(feature)">
+                            {{feature.label}}
+      </mat-checkbox>
+  </mat-list-item>
+</mat-list>

@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  api: "http://200.116.128.161:8080/EEAccountServices-war/webresources/entitys."
 };
 
 /*

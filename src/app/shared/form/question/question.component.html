@@ -1,0 +1,39 @@
+<div [formGroup]="form">
+ 
+  <div [ngSwitch]="question.controlType">
+    <mat-form-field *ngSwitchCase="'input'">
+        <input matInput [formControlName]="key"
+        [id]="key" [type]="question.type" [value]="question.value" [placeholder]="question.label">
+    </mat-form-field>
+
+    <div *ngSwitchCase="'hidden'">
+        <input [formControlName]="key"
+        [id]="key" [type]="question.type" [value]="question.value">
+    </div>
+    
+    <mat-form-field [formControlName]="key" *ngSwitchCase="'dropdown'" [id]="key"  >
+      <mat-select [placeholder]="question.label">
+          <mat-option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngSwitchCase="'arrayModal'">
+        <mat-list [formArrayName] = "key">
+          <mat-list-item>
+            <button mat-button (click)="openDialog(question)">Agregar item</button>
+          </mat-list-item>
+          <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
+            <div *ngFor="let ele of item | keys">
+            |  {{ele}} : {{item[ele]}}  |
+            </div>
+            <button mat-button (click)="deleteArrayItem(i, key)">Delete</button>
+          </mat-list-item>
+        </mat-list>
+    </div>
+    <div *ngSwitchCase="'arrayGrid'">
+      <mat-grid-list>
+        <mat-grid-tile *ngFor="let item of question.value"></mat-grid-tile>
+      </mat-grid-list>
+  </div>
+ 
+  </div> 
+</div>
