@@ -1,10 +1,8 @@
-<p>
-  core works!
-</p>
 <div class="main">
     <app-list [items]="items" 
     [listType]="listType" 
-    [keys]="keys" 
+    [keys]="keys"
+    [model] = 'model'
     (selected)="selection($event)"></app-list>
     <div>
         <!-- <nav mat-tab-nav-bar>

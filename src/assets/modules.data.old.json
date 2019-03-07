@@ -1,0 +1,520 @@
+[
+    {
+        "name": "chartofaccounts",
+        "displayInfo": [
+            "chartofaccountsid",
+            "accountname",
+            "costcenter",
+            "isretatsource",
+            "percentage",
+            "base",
+            "usenit",
+            "about"
+        ],
+        "endpoint": "chartofaccounts",
+        "listType": "table",
+        "idName": "chartofaccountsid",
+        "model": {
+            "chartofaccountsid": {
+                "value": "",
+                "controlType": "hidden",
+                "type": "hidden",
+                "key": "chartofaccountsid",
+                "label": "id"
+            },
+            "accountname": {
+                "value": "",
+                "validation": {
+                    "required": "hola firstName"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "accountname",
+                "label": "Name"
+            },
+            "costcenter": {
+                "value": "",
+                "validation": {
+                    "required": "hola lastName"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "costcenter",
+                "label": "Cost Center"
+            },
+            "isretatsource": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "isretatsource",
+                "label": "Is Retat Source"
+            },
+            "percentage": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "percentage",
+                "label": "percentage"
+            },
+            "base": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "base",
+                "label": "base"
+            },
+            "usenit": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "usenit",
+                "label": "usenit"
+            },
+            "luser": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "luser",
+                "label": "luser"
+            },
+            "isactive": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "isactive",
+                "label": "isactive"
+            },
+            "createat": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "createat",
+                "label": "createat"
+            },
+            "version": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "version",
+                "label": "version"
+            },
+            "about": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "about",
+                "label": "about"
+            },
+            "typechaccount": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "typechaccount",
+                "label": "typechaccount"
+            }
+        }
+    },
+    {
+        "name": "cities",
+        "displayInfo": [
+            "cityid",
+            "namecity",
+            "abbreviation"
+        ],
+        "endpoint": "cities",
+        "listType": "table",
+        "idName": "cityid",
+        "model": {
+            "cityid": {
+                "value": "",
+                "controlType": "hidden",
+                "type": "hidden",
+                "key": "cityid",
+                "label": "cityid"
+            },
+            "namecity": {
+                "value": "",
+                "validation": {
+                    "required": "hola firstName"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "namecity",
+                "label": "namecity"
+            },
+            "abbreviation": {
+                "value": "",
+                "validation": {
+                    "required": "hola lastName"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "abbreviation",
+                "label": "abbreviation"
+            },
+            "luser": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "hidden",
+                "type": "hidden",
+                "key": "luser",
+                "label": "luser"
+            },
+            "isactive": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "isactive",
+                "label": "isactive"
+            },
+            "version": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "hidden",
+                "type": "hidden",
+                "key": "version",
+                "label": "version"
+            },
+            "stateid": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "hidden",
+                "key": "hidden",
+                "label": "stateid"
+            }
+        }
+    },
+    {
+        "name": "clients",
+        "displayInfo": [
+            "clientsid",
+            "fname",
+            "sname",
+            "flname",
+            "slname",
+            "addressid",
+            "email",
+            "phone",
+            "dv",
+            "contact",
+            "cellphone",
+            "businessname",
+            "luser",
+            "version",
+            "isactive",
+            "city",
+            "state",
+            "typeaccount",
+            "typeidentification",
+            "typeperson"
+        ],
+        "endpoint": "clients",
+        "listType": "table",
+        "idName": "clientsid",
+        "model": {
+            "clientsid": {
+                "value": "",
+                "controlType": "hidden",
+                "type": "hidden",
+                "key": "clientsid",
+                "label": "clientsid"
+            },
+            "fname": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "fname",
+                "label": "fname"
+            },
+            "sname": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "sname",
+                "label": "sname"
+            },
+            "flname": {
+                "value": "",
+                "validation": {
+                    "required": "hola sname"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "flname",
+                "label": "flname"
+            },
+            "slname": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "slname",
+                "label": "slname"
+            },
+            "addressid": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "addressid",
+                "label": "addressid"
+            },
+            "email": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "email",
+                "label": "email"
+            },
+            "phone": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "phone",
+                "label": "phone"
+            },
+            "dv": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "dv",
+                "label": "dv"
+            },
+            "contact": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "contact",
+                "label": "contact"
+            },
+            "cellphone": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "cellphone",
+                "label": "cellphone"
+            },
+            "businessname": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "businessname",
+                "label": "businessname"
+            },
+            "luser": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "luser",
+                "label": "luser"
+            },
+            "version": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "version",
+                "label": "version"
+            },
+            "isactive": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "isactive",
+                "label": "isactive"
+            },
+            "city": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "city",
+                "label": "city"
+            },
+            "state": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "state",
+                "label": "state"
+            },
+            "typeaccount": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "typeaccount",
+                "label": "typeaccount"
+            },
+            "typeidentification": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "typeidentification",
+                "label": "typeidentification"
+            },
+            "typeperson": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "typeperson",
+                "label": "typeperson"
+            }
+            
+        }
+    },
+    {
+        "name": "roles",
+        "displayInfo": [
+            "Rolid",
+            "Namerole",
+            "Luser",
+            "Version",
+            "Isactive"
+        ],
+        "endpoint": "roles",
+        "listType": "table",
+        "idName": "Rolid",
+        "model":{
+            "Rolid": {
+                "value": "",
+                "validation": {
+                    "required": "Se requiere un id"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "Rolid",
+                "label": "Id"
+            },
+            "Namerole": {
+                "value": "",
+                "validation": {
+                    "required": "se requiere un nombre"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "Namerole",
+                "label": "Name"
+            },
+            "Luser": {
+                "value": "",
+                "validation": {
+                    "required": "se requiere un último usuario"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "Luser",
+                "label": "Luser"
+            },
+            "Version": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "Version",
+                "label": "Version"
+            },
+            "Isactive": {
+                "value": "",
+                "validation": {
+                    "required": "hola about"
+                },
+                "controlType": "input",
+                "type": "string",
+                "key": "Isactive",
+                "label": "Isactive"
+            }
+        }
+    }
+]

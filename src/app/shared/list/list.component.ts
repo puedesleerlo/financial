@@ -10,6 +10,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class ListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() listType: string = "table"
   @Input() items: any[]
+  @Input() model: any
   @Input() keys: string[] = []
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;

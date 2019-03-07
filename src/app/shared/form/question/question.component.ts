@@ -26,12 +26,24 @@ export interface Question {
 export class QuestionComponent implements OnChanges {
   @Input() question: Field;
   @Input() form: FormGroup;
+  imageSrc: string | ArrayBuffer;
   constructor(public dialog: MatDialog) { 
   }
 
   get key() {
     return this.question.key
   }
+  readURL(event: Evento): void {
+    console.log(event.target)
+    if (event.target.files && event.target.files[0]) {
+        const file = event.target.files[0];
+
+        const reader = new FileReader();
+        reader.onload = e => this.imageSrc = reader.result;
+
+        reader.readAsDataURL(file);
+    }
+}
 
   ngOnChanges() {
 
@@ -59,4 +71,7 @@ export class QuestionComponent implements OnChanges {
       control.push(result)
     });
   }
+}
+export interface Evento extends Event {
+  target: any
 }

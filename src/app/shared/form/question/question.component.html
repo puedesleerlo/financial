@@ -6,6 +6,16 @@
         [id]="key" [type]="question.type" [value]="question.value" [placeholder]="question.label">
     </mat-form-field>
 
+    <mat-form-field *ngSwitchCase="'textarea'">
+      <textarea matInput [formControlName]="key"
+      [id]="key" [type]="question.type" [value]="question.value" [placeholder]="question.label"></textarea>
+  </mat-form-field>
+
+    <div class="image-upload" *ngSwitchCase="'image'">
+    <input [id]="key" [formControlName]="key"  [type]="question.type" (change)="readURL($event);" />
+    <img id="blah" [src]="imageSrc || 'http://placehold.it/180'" width="100%" alt="your image" />
+    </div>
+
     <div *ngSwitchCase="'hidden'">
         <input [formControlName]="key"
         [id]="key" [type]="question.type" [value]="question.value">

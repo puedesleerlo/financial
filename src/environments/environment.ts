@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: "http://200.116.128.161:8080/EEAccountServices-war/webresources/entitys."
+  api: "https://jsonplaceholder.typicode.com/"
 };
 
 /*

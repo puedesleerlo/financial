@@ -11,7 +11,7 @@ import { Itemize } from '../../models/itemize';
 export class CoreComponent implements OnInit {
   items: any[]
   item: Model = {}
-  modelClass: any
+  model: any
   idName: string = "id"
   listType = ""
   keys = []
@@ -20,11 +20,13 @@ export class CoreComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data:{endpoint: string, items: any, displayInfo: string[], listType: string, idName?: string }) => {
+    this.route.data.subscribe((data:{endpoint: string, model: any, items: any, displayInfo: string[], listType: string, idName?: string }) => {
       console.log(data)
       this.items = data.items
       this.listType = data.listType
       this.keys = data.displayInfo
+      this.model = data.model
+      console.log(this.model)
       this.idName = data.idName
       this.endpoint = data.endpoint
     })
