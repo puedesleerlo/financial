@@ -14,6 +14,7 @@ import { ResolverApi } from './shell/core/resolverApi';
 import { ApiService } from './api.service';
 import { CoreComponent } from './shell/core/core.component';
 import { FormShellComponent } from './shell/form-shell/form-shell.component';
+import { LoginModule } from './login/login.module';
 
 export function initSettings(settings: SettingsService) {
   return () => settings.loadSettings();
@@ -27,6 +28,7 @@ export function initSettings(settings: SettingsService) {
     BrowserModule,
     SharedModule,
     ShellModule,
+    LoginModule,
     HttpClientModule,
     RouterModule.forRoot([]),
 
