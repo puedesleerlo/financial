@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Itemize } from '../../models/itemize';
-import { Model } from '../../models/model';
 import { DataService } from '../../data.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-form-shell',
@@ -16,16 +15,16 @@ export class FormShellComponent implements OnInit {
   constructor(private route: ActivatedRoute, private ds: DataService) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data:{model: any, values: any, api: string, idName: string }) => {
-      var model = Object.assign({}, data.model)
-      if(data.values) {
-        for(let val in model) {
-          model[val]["value"] = data.values[val]
-        }
-      }
-      this.ds.setURL(data.api)
-      this.model = model
-      this.idName = data.idName
+    this.route.data.subscribe((data:{info: Info}) => {
+      // if(data.values) {
+      //   for(let val in model) {
+      //     model[val]["value"] = data.values[val]
+      //   }
+      // }
+      // console.log(data.info)
+      this.ds.setURL(environment + data.info.endpoint)
+      this.model = data.info.model
+      this.idName = data.info.idname
       
     })
   }
@@ -40,4 +39,21 @@ export class FormShellComponent implements OnInit {
     }
   }
 
+}
+
+interface Info {
+  name: string
+  endpoint: string,
+  idname: string,
+  model: Model
+}
+interface Model {
+  [key: string]: Field
+}
+interface Field {
+  value: string,
+  controlType: string, 
+  type: string,
+  key: string,
+  label: string
 }

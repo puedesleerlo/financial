@@ -18,6 +18,7 @@ export class FormComponent extends Form implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    // console.log(this.model)
     this.buildForm(this.model)
   }
 

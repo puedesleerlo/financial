@@ -40,10 +40,10 @@ export class AuthService {
  
         this.http.post(this.API_URL + '/login', data, headers).subscribe(
             (res: any) => {
-                localStorage.setItem(this.TOKEN_KEY, res.token);
-                console.log(res.token)
-                this.getUserData();
-                this.routes()
+                localStorage.setItem(this.TOKEN_KEY, res.account.token);
+                console.log(res)
+                // this.getUserData();
+                // this.routes()
                 this.router.navigateByUrl('/');
             }
         );

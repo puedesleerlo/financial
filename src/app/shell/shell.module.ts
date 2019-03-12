@@ -9,13 +9,26 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from '../auth/auth.interceptor';
 import { CanActivateViaAuthGuard } from '../auth/auth.guard';
 import { AuthRolesGuard } from '../auth/auth.roles.guard';
+import { FormNewResolver } from './form-shell/form.new.resolver';
+import { ResolverApi } from './core/resolverApi';
 
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule
+    RouterModule.forChild([
+      {
+        path: 'admin',
+        component: CoreComponent,
+        resolve: {forms: ResolverApi}
+      },
+      {
+        path: 'forms/:id',
+        component: FormShellComponent,
+        resolve: {info: FormNewResolver}
+      },
+    ])
   ],
   exports: [MenuComponent, CoreComponent, FormShellComponent],
   providers: [
@@ -24,6 +37,7 @@ import { AuthRolesGuard } from '../auth/auth.roles.guard';
       useClass: AuthInterceptorService,
       multi: true
   },
+  FormNewResolver,
   CanActivateViaAuthGuard,
   AuthRolesGuard
   ],
