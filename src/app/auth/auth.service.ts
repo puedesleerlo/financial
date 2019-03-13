@@ -12,7 +12,9 @@ export class AuthService {
     
     API_URL = 'http://localhost/go';
     TOKEN_KEY = 'token';
-    currentUser: BehaviorSubject<User> =  new BehaviorSubject({email: "", role: ""});
+    ROLE_KEY = "role"
+    user: any = <any>{}
+    currentUser: BehaviorSubject<any> =  new BehaviorSubject({});
     constructor(private http: HttpClient, private ds: DataService, private router: Router, private injector: Injector) { }
  
     get token() {
@@ -21,6 +23,10 @@ export class AuthService {
  
     get isAuthenticated() {
         return !!localStorage.getItem(this.TOKEN_KEY);
+    }
+
+    get isAdmin() {
+        return localStorage.getItem(this.ROLE_KEY) === "admin"
     }
  
     logout() {
@@ -41,43 +47,15 @@ export class AuthService {
         this.http.post(this.API_URL + '/login', data, headers).subscribe(
             (res: any) => {
                 localStorage.setItem(this.TOKEN_KEY, res.account.token);
+                localStorage.setItem(this.ROLE_KEY, res.account.role);
                 console.log(res)
-                // this.getUserData();
-                // this.routes()
                 this.router.navigateByUrl('/');
             }
         );
     }
  
-    getAccount() {
-        return this.http.get(this.API_URL + '/account');
-    }
-    getUserData() {
-        this.http.get(this.API_URL + '/user').subscribe((data:User)=> {
-            this.currentUser.next(data)
-            console.log(data);
-        });
-    }
-
-    routes() {
-        const router = this.injector.get(Router);
-        this.ds.setURL(this.API_URL+'/routes')
-      this.ds.getData()
-      .subscribe(
-        response => {
-            console.log("response", response)
-          var currentSettings = routesCalculator(response)
-        //   router.resetConfig(currentSettings)
-        //   console.log("router", router)
-          currentSettings.forEach(element => {
-            router.config.unshift(element);
-            console.log("router", router)
-          });
-        },
-        err => {
-          console.log(err);
-        }
-      );
+    getForms() {
+        return this.http.get(this.API_URL + '/forms');
     }
 }
 export interface User {

@@ -23,7 +23,7 @@
             </td>
           </ng-container>
         <ng-container *ngFor="let key of keys" matColumnDef="{{key}}">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{model[key].label}} </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{key}} </th>
           <td mat-cell *matCellDef="let element"> {{element[key]}} </td>
         </ng-container>
     

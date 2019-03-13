@@ -12,23 +12,23 @@ export class CoreComponent implements OnInit {
   items: any[]
   item: Model = {}
   model: any
-  idName: string = "id"
-  listType = ""
+  idName: string = "ID"
+  listType = "table"
   keys = []
   lists = []
   endpoint: string;
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data:{endpoint: string, model: any, items: any, displayInfo: string[], listType: string, idName?: string }) => {
+    this.route.data.subscribe((data:{api: string, model: any, items: any, displayInfo: string[], listType: string, idName?: string }) => {
       console.log(data)
       this.items = data.items
-      this.listType = data.listType
-      this.keys = data.displayInfo
-      this.model = data.model
-      console.log(this.model)
-      this.idName = data.idName
-      this.endpoint = data.endpoint
+      // this.listType = data.listType
+      this.keys = ["company", "displayinfo", "endpoint", "idname", "name","ID"]
+      // this.model = data.model
+      // console.log(this.model)
+      // this.idName = data.idName
+      this.endpoint = data.api
     })
   }
   

@@ -15,7 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class DataService {
-  private url = "api/Data"
+  private url = environment.api
   private handleError: HandleError;
   private id = "id"
   constructor(
@@ -24,7 +24,7 @@ export class DataService {
   }
 
   setURL(url) {
-    this.url = /* environment.api + */ url
+    this.url = environment.api + url
   }
 
   getUrl() {

@@ -11,35 +11,23 @@ import { CanActivateViaAuthGuard } from '../auth/auth.guard';
 import { AuthRolesGuard } from '../auth/auth.roles.guard';
 import { FormNewResolver } from './form-shell/form.new.resolver';
 import { ResolverApi } from './core/resolverApi';
+import { environment } from 'src/environments/environment';
+import { ShellRoutingModule } from './shell-routing.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild([
-      {
-        path: 'admin',
-        component: CoreComponent,
-        resolve: {forms: ResolverApi}
-      },
-      {
-        path: 'forms/:id',
-        component: FormShellComponent,
-        resolve: {info: FormNewResolver}
-      },
-    ])
+    ShellRoutingModule
   ],
-  exports: [MenuComponent, CoreComponent, FormShellComponent],
+  exports: [MenuComponent, CoreComponent, FormShellComponent, ShellRoutingModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
   },
-  FormNewResolver,
-  CanActivateViaAuthGuard,
-  AuthRolesGuard
   ],
   declarations: [MenuComponent, CoreComponent, FormShellComponent]
 })

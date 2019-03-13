@@ -12,8 +12,11 @@ export class ResolverApi implements Resolve<any> {
   constructor(private ds: DataService, private router: Router) {}
  
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any[]> {
-    // let id = route.paramMap.get('id');
-    this.ds.setURL(environment.api + 'forms');
-    return this.ds.getData()
+    let id = route.paramMap.get('id');
+    this.ds.setURL("admin/" + id);
+    var forms2Items = map((val: any) => {
+      return val.items
+    });
+    return forms2Items(this.ds.getData())
   }
 }
