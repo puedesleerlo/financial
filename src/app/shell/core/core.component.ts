@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Model} from '../../models/model';
 import { Itemize } from '../../models/itemize';
+import { FormSample } from 'src/assets/admin.data';
 
 @Component({
   selector: 'app-core',
@@ -20,15 +21,16 @@ export class CoreComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data:{api: string, model: any, items: any, displayInfo: string[], listType: string, idName?: string }) => {
+    this.route.data.subscribe((data:{items: any}) => {
       console.log(data)
       this.items = data.items
+      let stage = this.route.snapshot.paramMap.get("id")
       // this.listType = data.listType
       this.keys = ["company", "displayinfo", "endpoint", "idname", "name","ID"]
-      // this.model = data.model
+      this.model = FormSample[stage]
+      this.idName = this.model.idname
       // console.log(this.model)
-      // this.idName = data.idName
-      this.endpoint = data.api
+      // this.idName = this.model.idname
     })
   }
   

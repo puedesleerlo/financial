@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Form } from './form';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormModel } from 'src/app/models/form.model';
+import { Model } from 'src/app/models/model';
 
 
 @Component({
@@ -9,7 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent extends Form implements OnInit, OnChanges {
-  @Input() model: any = {}
+  @Input() model: Model = <Model>{}
   @Output() up: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
   @Output() remove: EventEmitter<any> = new EventEmitter<any>();
 
@@ -18,8 +20,8 @@ export class FormComponent extends Form implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    // console.log(this.model)
     this.buildForm(this.model)
+    console.log(this.model)
   }
 
   ngOnChanges() {

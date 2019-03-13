@@ -1,5 +1,5 @@
 import { Component,  Input, OnChanges } from '@angular/core';
-import { FormGroup, FormArray} from '@angular/forms';
+import { FormGroup, FormArray, FormControl} from '@angular/forms';
 import { Field } from '../../../models/model';
 import { MatDialog} from '@angular/material';
 import { QuestionDialog } from '../question-dialog/question-dialog.component';
@@ -43,13 +43,13 @@ export class QuestionComponent implements OnChanges {
 
         reader.readAsDataURL(file);
     }
-}
+  }
 
   ngOnChanges() {
 
   }
   getArrayControl(key) {
-    return this.form.get(key);
+    return this.form.get(key) as FormArray;
   }
   getArrayValue(key) {
     return this.getArrayControl(key).value
@@ -57,6 +57,12 @@ export class QuestionComponent implements OnChanges {
   deleteArrayItem(index, key) {
     var control = <FormArray>this.getArrayControl(key)
     control.removeAt(index)
+  }
+  addItem(key: string, info): void {
+    let control = <FormArray>this.getArrayControl(key);
+    let field = new FormControl(info.value)
+    control.push(field)
+    info.value = ""
   }
   openDialog(question: Field): void {
     let control = <FormArray>this.getArrayControl(question.key);
