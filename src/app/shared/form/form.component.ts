@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 import { Form } from './form';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormModel } from 'src/app/models/form.model';
-import { Model } from 'src/app/models/model';
+import { Model, Field } from 'src/app/models/model';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { Model } from 'src/app/models/model';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent extends Form implements OnInit, OnChanges {
-  @Input() model: Model = <Model>{}
+  @Input() questions: Field[] = []
   @Output() up: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
   @Output() remove: EventEmitter<any> = new EventEmitter<any>();
 
@@ -20,12 +20,13 @@ export class FormComponent extends Form implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.buildForm(this.model)
-    console.log(this.model)
+    console.log("questions en form.components", this.questions)
+    this.buildForm(this.questions)
+    console.log("formulario actual", this.form)
   }
 
   ngOnChanges() {
-    this.buildForm(this.model)
+    this.buildForm(this.questions)
   }
   save() {
    this.up.emit(this.form.value)

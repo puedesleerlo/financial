@@ -1,11 +1,14 @@
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray, ValidatorFn, AbstractControl } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
-import { Model } from '../../models/model';
+import { Model, Field } from '../../models/model';
 
 interface Group {
     [key: string]: [any, any[]]
+}
+interface AbstractGroup {
+    [key:string]: AbstractControl
 }
 export abstract class Form {
     public form: FormGroup
@@ -14,8 +17,8 @@ export abstract class Form {
     constructor(private formBuilder: FormBuilder) {
         
      }
-    buildForm(model: Model, globalValidator?) {
-        var group = this.prepareGroup(model)
+    buildForm(questions: Field[], globalValidator?) {
+        var group = this.prepareGroup(questions)
         this.form = this.buildGroup(group, globalValidator);
         if (this.formSub) this.formSub.unsubscribe();
         this.formSub = this.form.valueChanges
@@ -25,22 +28,25 @@ export abstract class Form {
     buildGroup(group, validator = null) {
         return this.formBuilder.group(group, { validator });
     }
-    prepareGroup(initModel: Model) {
-        
-        var model = {}
-        
-        for (let key in initModel) {
-            var it = initModel[key]
-            if (it.value instanceof Array) {
-                model[key] = this.buildArray(it.value, it.validation);
+    prepareGroup(questions: Field[]): AbstractGroup {
+        //Recibe un arreglo de preguntas
+        var controls = {}
+        console.log(questions);
+        questions.map((field:Field) => {
+            let control = {}
+            console.log(field);
+            let validators = this.getValidators(field.validation) //Busca los validadores
+            let formcontrol;
+            if(field.type == "array") {
+                console.log("entra acá", field.value);
+                // formcontrol = this.buildArray(field.value, validators) //Construye el formulario de arreglos
             }
             else {
-                var validators = this.getValidators(it.validation)
-                model[key] = [it.value, validators]
+                formcontrol = this.formBuilder.control(field.value, validators)
             }
-        }
-        
-        return model
+            controls[field.key] = formcontrol
+        })
+        return controls
     }
     getValidators(validation) {
         let accum = []
@@ -52,12 +58,13 @@ export abstract class Form {
         
         return accum
     }
-    buildArray(array?: any[], validators?) {
+    buildArray(array: any[], validators?) {
+        console.log("mostrar array de Form", array)
         var groupForm = array.map(val => {
             var prepare = this.prepareGroup(val)
             return this.buildGroup(prepare)
         })
-        return this.formBuilder.array(groupForm || [], validators || CustomValidators.lengthArray());
+        return this.formBuilder.array(groupForm, validators || CustomValidators.lengthArray());
     }
     onValueChanged() {
         // console.log("value changed", this.form)

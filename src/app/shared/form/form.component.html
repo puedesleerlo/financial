@@ -1,9 +1,8 @@
 <div>
   <form [formGroup]="form">
     
-    <div *ngFor="let question of (model | keys)" class="form-row">
-        
-      <question [question]="model[question]" [form]="form"></question>
+    <div *ngFor="let question of questions" class="form-row">
+      <question [question]="question" [form]="form"></question>
     </div>
  
     <div class="form-row">

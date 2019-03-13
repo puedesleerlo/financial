@@ -4,7 +4,7 @@ import { DataService } from '../../data.service';
 import { environment } from 'src/environments/environment';
 import { FormSample } from 'src/assets/admin.data';
 import { FormModel } from 'src/app/models/form.model';
-import { Model } from 'src/app/models/model';
+import { Model, Field } from 'src/app/models/model';
 
 @Component({
   selector: 'app-form-shell',
@@ -13,7 +13,7 @@ import { Model } from 'src/app/models/model';
 })
 export class FormShellComponent implements OnInit {
   api: string
-  model: Model
+  questions: Field[] = []
   name: string
   idName: string
   constructor(private route: ActivatedRoute, private ds: DataService) { }
@@ -25,8 +25,9 @@ export class FormShellComponent implements OnInit {
       //     model[val]["value"] = data.values[val]
       //   }
       // }
+      console.log(data.form.questions)
       this.name = data.form.name
-      this.model = data.form.model
+      this.questions = data.form.questions
       
       
       // this.ds.setURL(environment + data.info.endpoint)

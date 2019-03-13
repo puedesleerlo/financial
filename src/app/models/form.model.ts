@@ -1,5 +1,5 @@
 import { componentFactoryName } from "@angular/compiler";
-import { Model } from "./model";
+import { Model, Field } from "./model";
 
 export interface FormModel {
     name: string
@@ -7,7 +7,7 @@ export interface FormModel {
     idname: string
     company?: string
     version?: string
-    model: Model
+    questions: Field[]
 }
 
 // export interface Model {

@@ -6,8 +6,8 @@ export const FormSample = {
     idname: "name",
     company: "",
     version:"",
-    model: {
-        name: {
+    questions: [
+        {
             key:"name",
             label:"Name",
             value:"",
@@ -17,7 +17,7 @@ export const FormSample = {
                 required: "required"
             }
         },
-        company: {
+        {
             key:"company",
             label:"Company",
             value:"",
@@ -27,9 +27,9 @@ export const FormSample = {
                 required: "required"
             }
         },
-        model: {
-            key:"model",
-            label:"Model",
+        {
+            key:"questions",
+            label:"Questions",
             value: [],
             type:"array",
             controltype: "autocompleteArray",
@@ -38,5 +38,6 @@ export const FormSample = {
                 required: "required"
             }
         }
-    }
+    ]
+
 }}
