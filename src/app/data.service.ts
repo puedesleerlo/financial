@@ -71,12 +71,13 @@ export class DataService {
   /** POST: add a new hero to the database */
   addData (data: any): Observable<any> {
     
-    console.log(this.url);
+    console.log(this.url + "/new", data);
+    var post = this.http.post<any>(this.url + "/new", data, httpOptions)
+    .pipe(
+      catchError(this.handleError('addData', data))
+    );
     
-    return this.http.post<any>(this.url + "new", data, httpOptions)
-      .pipe(
-        catchError(this.handleError('addData', data))
-      );
+    return post
   }
 
   /** DELETE: delete the Data from the server */

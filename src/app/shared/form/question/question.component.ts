@@ -48,9 +48,6 @@ export class QuestionComponent implements OnChanges {
   ngOnChanges() {
 
   }
-  disable(key) {
-    this.form.get(key).disable()
-  }
   getArrayControl(key) {
     return this.form.get(key) as FormArray;
   }
@@ -69,7 +66,7 @@ export class QuestionComponent implements OnChanges {
   }
   openDialog(question: Field): void {
     let control = <FormArray>this.getArrayControl(question.key);//Le entrega un form array
-    console.log(question.key) //es un array
+    console.log("schema", question.arrayschema) //es un array
     let dialogRef = this.dialog.open(QuestionDialog, {
       width: '250px',
       data: {questions: question.arrayschema} //Le entrega un formulario

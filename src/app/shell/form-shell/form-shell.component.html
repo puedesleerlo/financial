@@ -1,6 +1,6 @@
 <h1>{{name}}</h1>
   <mat-horizontal-stepper #stepper>
-    <mat-step *ngFor="let form of forms" [stepControl]="">
+    <mat-step *ngFor="let form of forms" [completed]="true">
         <ng-template matStepLabel>{{form.name}}</ng-template>
         <app-form [questions]="form.questions" (up)="getForm($event, form.name)"></app-form>
         <button mat-button matStepperNext>Next</button>

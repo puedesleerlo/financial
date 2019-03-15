@@ -29,12 +29,13 @@ export class FormShellComponent implements OnInit {
       this.forms = data.form.forms
       
       if(data.api) {
-        console.log("ROUTA", this.route.snapshot.parent.paramMap.get("id"))
-        this.ds.setURL(data.api)
+        console.log("ROUTA", )
+        var id = this.route.snapshot.parent.paramMap.get("id")
+        this.ds.setURL(data.api + id)
       }
       this.route.url.subscribe((value: UrlSegment[]) => {
         if(value[0] && data.api) {
-          this.ds.setURL(data.api + value[0].path)
+          this.ds.setURL(data.api + id +value[0].path)
         }
       });
       
@@ -51,7 +52,9 @@ export class FormShellComponent implements OnInit {
       values[key] = self.outputValue[key].value;
     });
     console.log("values", values)
-    this.ds.addData(values)
+    this.ds.addData(values).subscribe(resp => {
+      console.log(resp)
+    })
     // if(data[this.idName]) {
     //   var id = data[this.idName]
     //   this.ds.updateData(id, data).subscribe(data => console.log(data))

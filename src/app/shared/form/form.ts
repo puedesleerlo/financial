@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Model, Field } from '../../models/model';
+import { ArrayDataSource } from '@angular/cdk/collections';
 
 interface Group {
     [key: string]: [any, any[]]
@@ -25,7 +26,7 @@ export abstract class Form {
         this.onValueChanged();
     }
     
-    buildGroup(questions, validator = null) {
+    buildGroup(questions:Field[], validator = null) {
         var group = this.prepareGroup(questions)
         var form = this.formBuilder.group(group, { validator });
         return form
@@ -41,7 +42,11 @@ export abstract class Form {
             let formcontrol;
             if(field.type == "array") {
                 console.log("entra acá", field.value);
-                formcontrol = this.buildArray(field.value, field.arrayschema, validators) //Construye el formulario de arreglos
+                formcontrol = this.buildArray((field.value || []), field.arrayschema, validators) //Construye el formulario de arreglos
+            }
+            else if (field.type =="simplearray"){
+                console.log("simple array", field.value);
+                formcontrol = this.buildSimpleArray((field.value || []), validators)
             }
             else {
                 formcontrol = this.formBuilder.control(field.value, validators)
@@ -60,23 +65,39 @@ export abstract class Form {
         
         return accum
     }
-    buildArray(array: any[], schema: any[], validators?) { //Los arrays reciben los valores aparte de los esquemas
+    buildSimpleArray(array:any[], validators?) { // Es un arreglo de strings o de datos básicos. no son formularios sino controles
+        var formArray = []
+        array.forEach(dato => {
+            console.log("datos", dato)
+            var formcontrol = this.formBuilder.control(dato)
+            console.log("form array", formcontrol)
+            formArray.push(formcontrol)
+        })
+        return this.formBuilder.array(formArray, validators || CustomValidators.lengthArray())
+    }
+    buildArray(array: any[] = [], schema: any[] = [], validators?) { //Los arrays reciben los valores aparte de los esquemas
         console.log("mostrar array de Form", array)
         console.log("mostrar array de Schema", schema)
-        var prosArray = array.map(dato => {
-            var toquestion = schema.map(question => {
+        var arrays=[]
+        array.forEach(dato => {
+            var prosArray = []
+            schema.forEach(question => {
+                var toquestion:any = {}
                 console.log("mostrar question", question)
                 console.log("mostrar dato", dato)
-                question.value = dato[question.key]
-                return question
+                Object.assign(toquestion, question)
+                toquestion.value = dato[question.key]
+                console.log("toquestion", toquestion); //Pregunta con el valor del formulario
+                prosArray.push(toquestion) //Hace un arreglo de las preguntas
             })
-            console.log("toquestion", toquestion);
-            var groupForm = this.buildGroup(toquestion)
-            return groupForm  
+            var groupForm = this.buildGroup(prosArray) //Convierte el arreglo de preguntas en un formulario
+            arrays.push(groupForm); //Hace un array de formularios
+            
         })
-        console.log("mostrar array de Form después", prosArray)
+        // var prosArray = array.map()
+        console.log("mostrar array de Form después", arrays)
         
-        return this.formBuilder.array(prosArray, validators || CustomValidators.lengthArray());
+        return this.formBuilder.array(arrays, validators || CustomValidators.lengthArray());
     }
     onValueChanged() {
         // console.log("value changed", this.form)

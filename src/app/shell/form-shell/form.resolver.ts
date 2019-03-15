@@ -18,14 +18,14 @@ export class FormResolver implements Resolve<any> {
     this.ds.setURL("admin/"+stage)
     let customMap = map((val:any) => {
       let form = val.admin
-      console.log(form);
-      if(form.forms) {
-        form.forms.forEach(form => {
-          form.questions.forEach(question => {
-            Object.assign(question, question.custom)
-          });
-        });
-      }
+      console.log("esto es lo que se recibe", form);
+      // if(form.forms) {
+      //   form.forms.forEach(form => {
+      //     form.questions.forEach(question => {
+      //       Object.assign(question, question.custom)
+      //     });
+      //   });
+      // }
       return form
     })
     return customMap(this.ds.searchData(id || "newform"))

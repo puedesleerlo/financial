@@ -16,7 +16,7 @@ export class QuestionDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: {questions: Question[]}) {}
 
   ngOnInit() {
-    this.data.questions.map(val => this.arrayMapping(val));
+    // this.data.questions.map(val => this.arrayMapping(val));
     this.questions =  this.data.questions//Es un array
     console.log(this.questions)
   }

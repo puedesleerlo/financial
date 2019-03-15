@@ -9,6 +9,7 @@ export class AuthInterceptorService implements HttpInterceptor {
  
     intercept(req, next) {
         const authService = this.injector.get(AuthService);
+        console.log(req)
         const authRequest = req.clone({
             // tslint:disable-next-line:max-line-length
             headers: req.headers.set('Authorization', 'Bearer ' + authService.token)

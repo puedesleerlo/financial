@@ -2,7 +2,10 @@
   <form [formGroup]="form">
     
     <div *ngFor="let question of questions" class="form-row">
-      <question [question]="question" [form]="form"></question>
+      <div *ngIf="getCondition(question)">
+          <question [question]="question" [form]="form"></question>
+      </div>
+      
     </div>
  
     <!-- <div class="form-row">

@@ -1,5 +1,6 @@
 <div [formGroup]="form">
   <div [ngSwitch]="question.controltype">
+    
     <mat-form-field *ngSwitchCase="'input'">
         <input matInput [formControlName]="key"
         [id]="key" [type]="question.type" [value]="question.value" [placeholder]="question.label">
@@ -16,7 +17,7 @@
     </div>
     <mat-form-field *ngSwitchCase="'disabled'">
         <input matInput [formControlName]="key"
-        [id]="key" (click)="disable(key)" [type]="question.type" disabled [value]="question.value" [placeholder]="question.label">
+        [id]="key" [type]="question.type" [value]="question.value.value" [placeholder]="question.label">
     </mat-form-field>
     <div *ngSwitchCase="'hidden'">
         <input [formControlName]="key"
@@ -40,19 +41,40 @@
                 <button (click)="addItem(key, autocomplete)">Add</button>
             </mat-list-item>
             <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
-              {{item | json}}
+              {{item}}
+              <!-- <span *ngFor="let form of Object.keys(item)">
+                {{item[form]}}
+              </span> -->
+              
               <button mat-button (click)="deleteArrayItem(i, key)">Delete</button>
             </mat-list-item>
           </mat-list>
                 
     </div>
-    <div *ngSwitchCase="'autocompleteArray'">
+    <div *ngSwitchCase="'arrayinput'">
+        <mat-list [formArrayName] = "key">
+            <mat-list-item>
+                <mat-form-field>
+                    <input type="text" #arrayinputfield matInput>
+                  </mat-form-field>
+                <button (click)="addItem(key, arrayinputfield)">Add</button>
+            </mat-list-item>
+            <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
+              {{item}}
+              <button mat-button (click)="deleteArrayItem(i, key)">Delete</button>
+            </mat-list-item>
+          </mat-list> 
+    </div>
+    <div *ngSwitchCase="'arraymodal'">
         <mat-list [formArrayName] = "key">
           <mat-list-item>
+            <!-- {{question.value |json}} -->
             <button mat-button (click)="openDialog(question)">Agregar item</button>
           </mat-list-item>
           <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
-            {{item.key}}
+                <div  *ngFor="let li of item |keys">
+                    {{li}} : {{item[li]}}
+                </div>
             <button mat-button (click)="deleteArrayItem(i, key)">Delete</button>
           </mat-list-item>
         </mat-list>
