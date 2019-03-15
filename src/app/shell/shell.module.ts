@@ -13,6 +13,7 @@ import { FormNewResolver } from './form-shell/form.new.resolver';
 import { ResolverApi } from './core/resolverApi';
 import { environment } from 'src/environments/environment';
 import { ShellRoutingModule } from './shell-routing.module';
+import { AdminFormComponent } from './admin-form/admin-form.component';
 
 
 @NgModule({
@@ -29,6 +30,6 @@ import { ShellRoutingModule } from './shell-routing.module';
       multi: true
   },
   ],
-  declarations: [MenuComponent, CoreComponent, FormShellComponent]
+  declarations: [MenuComponent, CoreComponent, FormShellComponent, AdminFormComponent]
 })
 export class ShellModule { }

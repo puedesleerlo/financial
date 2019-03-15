@@ -18,15 +18,17 @@ export abstract class Form {
         
      }
     buildForm(questions: Field[], globalValidator?) {
-        var group = this.prepareGroup(questions)
-        this.form = this.buildGroup(group, globalValidator);
+        this.form = this.buildGroup(questions, globalValidator);
         if (this.formSub) this.formSub.unsubscribe();
         this.formSub = this.form.valueChanges
             .subscribe(data => this.onValueChanged());
         this.onValueChanged();
     }
-    buildGroup(group, validator = null) {
-        return this.formBuilder.group(group, { validator });
+    
+    buildGroup(questions, validator = null) {
+        var group = this.prepareGroup(questions)
+        var form = this.formBuilder.group(group, { validator });
+        return form
     }
     prepareGroup(questions: Field[]): AbstractGroup {
         //Recibe un arreglo de preguntas
@@ -34,12 +36,12 @@ export abstract class Form {
         console.log(questions);
         questions.map((field:Field) => {
             let control = {}
-            console.log(field);
+            // console.log("field", field);
             let validators = this.getValidators(field.validation) //Busca los validadores
             let formcontrol;
             if(field.type == "array") {
                 console.log("entra acá", field.value);
-                // formcontrol = this.buildArray(field.value, validators) //Construye el formulario de arreglos
+                formcontrol = this.buildArray(field.value, field.arrayschema, validators) //Construye el formulario de arreglos
             }
             else {
                 formcontrol = this.formBuilder.control(field.value, validators)
@@ -58,13 +60,23 @@ export abstract class Form {
         
         return accum
     }
-    buildArray(array: any[], validators?) {
+    buildArray(array: any[], schema: any[], validators?) { //Los arrays reciben los valores aparte de los esquemas
         console.log("mostrar array de Form", array)
-        var groupForm = array.map(val => {
-            var prepare = this.prepareGroup(val)
-            return this.buildGroup(prepare)
+        console.log("mostrar array de Schema", schema)
+        var prosArray = array.map(dato => {
+            var toquestion = schema.map(question => {
+                console.log("mostrar question", question)
+                console.log("mostrar dato", dato)
+                question.value = dato[question.key]
+                return question
+            })
+            console.log("toquestion", toquestion);
+            var groupForm = this.buildGroup(toquestion)
+            return groupForm  
         })
-        return this.formBuilder.array(groupForm, validators || CustomValidators.lengthArray());
+        console.log("mostrar array de Form después", prosArray)
+        
+        return this.formBuilder.array(prosArray, validators || CustomValidators.lengthArray());
     }
     onValueChanged() {
         // console.log("value changed", this.form)

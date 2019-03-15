@@ -13,7 +13,9 @@ export class ResolverApi implements Resolve<any> {
  
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any[]> {
     let id = route.paramMap.get('id');
-    this.ds.setURL("admin/" + id);
+    this.ds.addURL("admin/" + id);
+    console.log(this.ds.getUrl());
+    
     var forms2Items = map((val: any) => {
       return val.items
     });

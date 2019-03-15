@@ -3,7 +3,7 @@ import { FormGroup, FormArray, FormControl} from '@angular/forms';
 import { Field } from '../../../models/model';
 import { MatDialog} from '@angular/material';
 import { QuestionDialog } from '../question-dialog/question-dialog.component';
-
+import {FormGroup as FormModel} from "../../../models/form.model"
 export interface Question {
   key: string,
   value: {
@@ -48,6 +48,9 @@ export class QuestionComponent implements OnChanges {
   ngOnChanges() {
 
   }
+  disable(key) {
+    this.form.get(key).disable()
+  }
   getArrayControl(key) {
     return this.form.get(key) as FormArray;
   }
@@ -65,17 +68,24 @@ export class QuestionComponent implements OnChanges {
     info.value = ""
   }
   openDialog(question: Field): void {
-    let control = <FormArray>this.getArrayControl(question.key);
-    console.log(question.value)
+    let control = <FormArray>this.getArrayControl(question.key);//Le entrega un form array
+    console.log(question.key) //es un array
     let dialogRef = this.dialog.open(QuestionDialog, {
       width: '250px',
-      data: {schema: question.arraySchema}
+      data: {questions: question.arrayschema} //Le entrega un formulario
     });
 
     dialogRef.afterClosed().subscribe((result:FormGroup) => {
       console.log('The dialog was closed', result);
-      control.push(result)
+      if(result) {
+        // console.log(control)
+        control.push(result)
+      }
+      
     });
+  }
+  displayFn(field?: FormModel): string | undefined {
+    return field ? field.name : undefined;
   }
 }
 export interface Evento extends Event {

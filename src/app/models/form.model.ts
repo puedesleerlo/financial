@@ -10,6 +10,13 @@ export interface FormModel {
     questions: Field[]
 }
 
+export interface FormGroup {
+    name: string
+    endpoint: string
+    forms: FormModel[]
+    company: string
+}
+
 // export interface Model {
 //     [key: string]: Field
 //   }

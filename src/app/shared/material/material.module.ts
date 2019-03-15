@@ -11,7 +11,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { MatPaginatorModule, MatSelectModule, MatDialogModule, MatAutocompleteModule } from '@angular/material';
+import { MatPaginatorModule, MatSelectModule, MatDialogModule, MatAutocompleteModule, MatStepperModule } from '@angular/material';
 
 
 
@@ -33,7 +33,8 @@ import { MatPaginatorModule, MatSelectModule, MatDialogModule, MatAutocompleteMo
     MatSelectModule,
     MatDialogModule,
     MatTabsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatStepperModule
 ],
   declarations: []
 })

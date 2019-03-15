@@ -1,2 +1,3 @@
 <!-- <question ></question> -->
-<app-form [questions]="schema" (up)="pushArray($event)"> </app-form>
+<app-form [questions]="questions" (up)="pushArray($event)"> </app-form>
+<button [disabled]="isinValid" (click)="close()">guardar</button>

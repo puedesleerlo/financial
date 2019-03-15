@@ -31,6 +31,10 @@ export class DataService {
     return this.url
   }
 
+  addURL(added) {
+    this.url = this.url + added
+  }
+
   setId(id: string) {
     this.id = id
   }
@@ -45,6 +49,7 @@ export class DataService {
 
   /* GET Data whose name contains search term */
   searchData(term: string): Observable<any[]> {
+    // console.log(this.url)
     term = term.trim();
     
     // Add safe, URL encoded search parameter if there is a search term
@@ -66,8 +71,9 @@ export class DataService {
   /** POST: add a new hero to the database */
   addData (data: any): Observable<any> {
     
-
-    return this.http.post<any>(this.url, data, httpOptions)
+    console.log(this.url);
+    
+    return this.http.post<any>(this.url + "new", data, httpOptions)
       .pipe(
         catchError(this.handleError('addData', data))
       );

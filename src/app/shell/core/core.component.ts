@@ -27,8 +27,8 @@ export class CoreComponent implements OnInit {
       let stage = this.route.snapshot.paramMap.get("id")
       // this.listType = data.listType
       this.keys = ["company", "displayinfo", "endpoint", "idname", "name","ID"]
-      this.model = FormSample[stage]
-      this.idName = this.model.idname
+      // this.model = FormSample[stage]
+      this.idName = "name"
       // console.log(this.model)
       // this.idName = this.model.idname
     })

@@ -15,32 +15,19 @@ export class FormResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     let id = route.paramMap.get('item');
     let stage = route.parent.paramMap.get('id')
-    let sample = FormSample[stage]
-    if(id) {
-      this.ds.searchData(id).subscribe((res:any) => {
-        // console.log(res.form);
-        
-        sample.questions.forEach(val => {
-          // console.log(val);
-          val.value = res.form[val.key]
+    this.ds.setURL("admin/"+stage)
+    let customMap = map((val:any) => {
+      let form = val.admin
+      console.log(form);
+      if(form.forms) {
+        form.forms.forEach(form => {
+          form.questions.forEach(question => {
+            Object.assign(question, question.custom)
+          });
         });
-        console.log("resolver", sample);
-        this.sample$.next(sample)
-        return Observable.create(ob => {
-          ob.next(sample)
-          ob.complete()
-        })
-      })
-    }
-    return Observable.create(ob => {
-      ob.next(sample)
-      ob.complete()
+      }
+      return form
     })
-    // else this.sample$.next(sample)
-    // console.log(sample);
-    
-    // return this.sample$
-    
-
+    return customMap(this.ds.searchData(id || "newform"))
   }
 }

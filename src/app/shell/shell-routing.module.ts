@@ -21,10 +21,12 @@ const routes:Routes = [
       {
         path: "",
         component: FormShellComponent,
+        data: {api: "admin/"},
         resolve: {form: FormResolver},
       },
       {
         path: ":item",
+        data: {api: "admin/"},
         component: FormShellComponent,
         resolve: {form: FormResolver},
       }

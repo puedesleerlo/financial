@@ -1,3 +1,5 @@
+import { FormModel } from "./form.model";
+
 export class Field {
     value: any
     validation: {
@@ -5,10 +7,10 @@ export class Field {
     }
     key: string
     label: string
-    controlType: string
+    controltype: string
     type?: string
     options?: keyValue[]
-    arraySchema?: Model
+    arrayschema?: Field[]
 
     constructor(...object) {
         for(let a in object[0]) {
