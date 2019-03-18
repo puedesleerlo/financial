@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Model, Field } from '../../models/model';
 import { ArrayDataSource } from '@angular/cdk/collections';
+import { Conditional } from '../logic.analizer';
 
 interface Group {
     [key: string]: [any, any[]]
@@ -13,17 +14,45 @@ interface AbstractGroup {
 }
 export abstract class Form {
     public form: FormGroup
+    public questions: Field[]
     private formSub: Subscription
     protected formErrors = {}
+    // public conditionalHandler = new Conditional(this.form)
     constructor(private formBuilder: FormBuilder) {
         
      }
     buildForm(questions: Field[], globalValidator?) {
+        this.questions = questions
         this.form = this.buildGroup(questions, globalValidator);
+        this.conditionalSubs()
+        // this.conditionalHandler.setForm(this.form)
         if (this.formSub) this.formSub.unsubscribe();
         this.formSub = this.form.valueChanges
-            .subscribe(data => this.onValueChanged());
-        this.onValueChanged();
+            .subscribe(data => this.onValueChanged(data));
+        // this.onValueChanged();
+    }
+
+    conditionalSubs() {
+        this.questions.forEach(field => {
+            console.log("Empieza a buscar por condiciones", field);
+            
+            if (field.exist) {
+                console.log("Tiene la condición no exist");
+                
+                new Conditional(this.form, field, "exist").activateSubs()
+            }
+            if (field.disable) {
+                new Conditional(this.form, field, "disable").activateSubs()
+            }
+            if (field.options && field.options.length > 0) {
+                field.options.forEach(option => {
+                    if(option.optdisable) {
+                        new Conditional(this.form, option, "optdisable").activateSubs()
+                    } 
+                })
+            }
+        })
+        
     }
     
     buildGroup(questions:Field[], validator = null) {
@@ -39,7 +68,7 @@ export abstract class Form {
             let control = {}
             // console.log("field", field);
             let validators = this.getValidators(field.validation) //Busca los validadores
-            let formcontrol;
+            let formcontrol:AbstractControl;
             if(field.type == "array") {
                 console.log("entra acá", field.value);
                 formcontrol = this.buildArray((field.value || []), field.arrayschema, validators) //Construye el formulario de arreglos
@@ -55,7 +84,7 @@ export abstract class Form {
         })
         return controls
     }
-    getValidators(validation) {
+    getValidators(validation):ValidatorFn[] {
         let accum = []
         for(let key in validation) {
             var validator = validation[key]
@@ -99,7 +128,8 @@ export abstract class Form {
         
         return this.formBuilder.array(arrays, validators || CustomValidators.lengthArray());
     }
-    onValueChanged() {
+    onValueChanged(data) {
+        console.log("hola", data)
         // console.log("value changed", this.form)
         // if (!this.form) { return; }
         // this.formErrors = errorRecursion(this.form, this.validationMessages);

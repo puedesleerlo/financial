@@ -5,11 +5,14 @@ export class Field {
     validation: {
         [key: string]: string
     }
+    exist?: string
+    disable?:string
+    active?: boolean
     key: string
     label: string
     controltype: string
     type?: string
-    options?: keyValue[]
+    options?: Option[]
     arrayschema?: Field[]
 
     constructor(...object) {
@@ -24,7 +27,12 @@ export interface Model {
 }
 
 
-interface keyValue {
-    key: any
+export interface Option {
+    key?: string
+    name?:string
+    // existopt?: string
+    optdisable?: string
     value: any
+    optdisabled?:boolean
+    // disabled?:boolean
 }

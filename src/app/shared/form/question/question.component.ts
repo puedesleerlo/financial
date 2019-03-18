@@ -1,9 +1,10 @@
 import { Component,  Input, OnChanges } from '@angular/core';
 import { FormGroup, FormArray, FormControl} from '@angular/forms';
-import { Field } from '../../../models/model';
+import { Field, Option } from '../../../models/model';
 import { MatDialog} from '@angular/material';
 import { QuestionDialog } from '../question-dialog/question-dialog.component';
 import {FormGroup as FormModel} from "../../../models/form.model"
+import { Conditional } from '../../logic.analizer';
 export interface Question {
   key: string,
   value: {
@@ -52,7 +53,10 @@ export class QuestionComponent implements OnChanges {
     return this.form.get(key) as FormArray;
   }
   getArrayValue(key) {
-    return this.getArrayControl(key).value
+    var array = this.getArrayControl(key)
+    if(array) return array.value
+    else return []
+    
   }
   deleteArrayItem(index, key) {
     var control = <FormArray>this.getArrayControl(key)
@@ -80,6 +84,12 @@ export class QuestionComponent implements OnChanges {
       }
       
     });
+  }
+  isArrayDisabled(key) {
+    // console.log("disabled");
+    
+    var control = this.form.get(key)
+    return control.disabled
   }
   displayFn(field?: FormModel): string | undefined {
     return field ? field.name : undefined;
