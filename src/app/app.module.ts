@@ -16,6 +16,7 @@ import { CoreComponent } from './shell/core/core.component';
 import { FormShellComponent } from './shell/form-shell/form-shell.component';
 import { LoginModule } from './login/login.module';
 import { FormNewResolver } from './shell/form-shell/form.new.resolver';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function initSettings(settings: SettingsService) {
   return () => settings.loadSettings();
@@ -33,9 +34,10 @@ export function initSettings(settings: SettingsService) {
     HttpClientModule,
     RouterModule.forRoot([
       {
-        path: '**', redirectTo: 'login'
+        path: '**', redirectTo: '/forms/aassa'
       }
     ]),
+    BrowserAnimationsModule,
 
     // AppRoutingModule
   ],

@@ -76,7 +76,8 @@ export class QuestionComponent implements OnChanges {
     let control = <FormArray>this.getArrayControl(question.key);//Le entrega un form array
     console.log("schema", question.arrayschema) //es un array
     let dialogRef = this.dialog.open(QuestionDialog, {
-      width: '250px',
+      width: '450px',
+      height: '300px',
       data: {questions: question.arrayschema} //Le entrega un formulario
     });
 
@@ -96,7 +97,7 @@ export class QuestionComponent implements OnChanges {
     return control.disabled
   }
   displayFn(field?: FormModel): string | undefined {
-    return field ? field.key : undefined;
+    return field ? field.label : undefined;
   }
 }
 export interface Evento extends Event {

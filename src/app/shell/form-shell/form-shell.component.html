@@ -1,18 +1,18 @@
 <h1>{{name}}</h1>
-  <mat-vertical-stepper #stepper>
-    <mat-step *ngFor="let form of forms" [completed]="true">
+  <mat-vertical-stepper #stepper linear>
+    <mat-step *ngFor="let form of forms" [completed]="isCompleted(form.key)">
         <ng-template matStepLabel>{{form.label}}</ng-template>
         <app-form [item]="item" [questions]="form.questions" (up)="getForm($event, form.key)"></app-form>
-        <button color="primary" mat-raised-button matStepperNext>Next</button>
+        <button color="primary" mat-raised-button matStepperNext>Siguiente <mat-icon>arrow_right_alt</mat-icon></button>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      You are now done.
+      <ng-template matStepLabel>Listo</ng-template>
+      Has terminado el formulario
       <div>
-        <button matButton matStepperPrevious>Back</button>
+        <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
-        <button mat-button (click)="save()">Save</button>
-        <button mat-button (click)="delete()">Delete</button>
+        <button mat-mini-fab (click)="save()"><mat-icon>save</mat-icon></button>
+        <button *ngIf="!isItemEmpty()" mat-mini-fab color="warn" (click)="delete()"><mat-icon>delete</mat-icon></button>
       </div>
     </mat-step>
   </mat-vertical-stepper>

@@ -2,9 +2,7 @@ import { FormModel } from "./form.model";
 
 export class Field {
     value: any
-    validation: {
-        [key: string]: string
-    }
+    validation: Option[]
     exist?: string
     disable?:string
     active?: boolean

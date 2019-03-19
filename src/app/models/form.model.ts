@@ -2,8 +2,8 @@ import { componentFactoryName } from "@angular/compiler";
 import { Model, Field } from "./model";
 
 export interface FormModel {
-    name: string
-    endpoint?: string
+    key: string
+    label: string
     idname?: string
     company?: string
     version?: string
@@ -12,7 +12,7 @@ export interface FormModel {
 
 export interface FormGroup {
     key: string
-    endpoint: string
+    label: string
     forms: FormModel[]
     company: string
 }

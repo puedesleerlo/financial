@@ -23,8 +23,7 @@ export class FormComponent extends Form implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log("questions en form.components", this.questions)
-    this.patchValue()
-    this.buildForm(this.questions)
+    this.buildForm(this.patchValue(this.questions, this.item))
     // this.form.patchValue(this.item)
     // this.form.updateValueAndValidity()
     console.log("formulario actual", this.form)
@@ -33,21 +32,27 @@ export class FormComponent extends Form implements OnInit, OnChanges {
 
   ngOnChanges() {
     console.log("AQUÍ HUBO CAMBIOSS")
-    this.patchValue()
-    this.buildForm(this.questions)
+    
+    this.buildForm(this.patchValue(this.questions, this.item))
 
     // this.form.patchValue(this.item)
-    // this.form.updateValueAndValidity()
+    this.form.updateValueAndValidity()
     this.save()
   }
-  patchValue() {
-    console.log("El item está vacío", this.item)
-    if(!_.isEmpty(this.item)) {
-      this.questions.forEach(question => {
+  patchValue(questions, item) {
+    console.log("El item está vacío", item, this.form)
+    
+    if(!_.isEmpty(item)) { //muta el objeto
+      var localquestions = []
+      questions.forEach(question => {
+        var questionwithvalues = question
         console.log("las preguntas son estas", question)
-        question.value = this.item[question.key]
+        questionwithvalues.value = item[question.key]
+        localquestions.push(questionwithvalues)
       })
+      return localquestions
     }
+    else return this.questions
   }
   save() {
    this.up.emit(this.form)

@@ -2,9 +2,10 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray, ValidatorFn
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
-import { Model, Field } from '../../models/model';
+import { Model, Field, Option } from '../../models/model';
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { Conditional } from '../logic.analizer';
+import { ValidationText } from 'src/assets/validation.text';
 
 interface Group {
     [key: string]: [any, any[]]
@@ -68,7 +69,7 @@ export abstract class Form {
         questions.map((field:Field) => {
             let control = {}
             // console.log("field", field);
-            let validators = this.getValidators(field.validation) //Busca los validadores
+            let validators = this.getValidators(field.validation || []) //Busca los validadores
             let formcontrol:AbstractControl;
             switch (field.type) {
                 case "array":
@@ -94,14 +95,13 @@ export abstract class Form {
         })
         return controls
     }
-    getValidators(validation):ValidatorFn[] {
+    getValidators(validators: Option[]):ValidatorFn[] {
         let accum = []
-        for(let key in validation) {
-            var validator = validation[key]
-            var custom = CustomValidators[key] 
+        validators.forEach(validator =>{
+            var text = ValidationText[validator.key] 
+            var custom = CustomValidators[validator.key]
             accum.push(custom())
-        }
-        
+        })
         return accum
     }
     buildSimpleArray(array:any[], validators?) { // Es un arreglo de strings o de datos básicos. no son formularios sino controles

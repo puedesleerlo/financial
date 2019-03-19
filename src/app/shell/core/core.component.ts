@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Model} from '../../models/model';
 import { Itemize } from '../../models/itemize';
 import { FormSample } from 'src/assets/admin.data';
+import { relative } from 'path';
 
 @Component({
   selector: 'app-core',
@@ -18,13 +19,16 @@ export class CoreComponent implements OnInit {
   keys = []
   lists = []
   endpoint: string;
+  url: string;
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data:{items: any, group:any}) => {
-      console.log(data)
+    this.route.data.subscribe((data:{items: any, group:any, api:any}) => {
+      
       this.items = data.items
       let stage = this.route.snapshot.paramMap.get("id")
+      this.url = data.api + stage;
+      console.log("url en core", this.url)
       var leaderform = data.group.forms.filter(form => form.key ==data.group.leaderform);
       console.log("leaderform", leaderform)
       this.idName = data.group.idname
@@ -49,4 +53,15 @@ export class CoreComponent implements OnInit {
     this.router.navigate(['./' +  ev[0][this.idName]], {relativeTo: this.route});
   }
 
+  navigateToHere() {
+    this.router.navigate([this.url])
+    this.refresh()
+
+  }
+  refresh(): void {
+    setTimeout(() => {
+      window.location.reload();
+    }, 500)
+    
+  }
 }

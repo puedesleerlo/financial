@@ -32,10 +32,11 @@
     
     <mat-form-field  *ngSwitchCase="'dropdown'" [id]="key"  >
       <mat-select [formControlName]="key" [placeholder]="question.label">
-          <mat-option *ngFor="let opt of question.options" [disabled]="opt.optdisabled"  [value]="opt.key">{{opt.value}}</mat-option>
+          <mat-option *ngFor="let opt of question.options" [disabled]="opt.optdisabled"  [value]="opt.key">{{opt.label}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <div *ngSwitchCase="'arrayautocomplete'">
+    <div *ngSwitchCase="'arrayautocomplete'" class="arrayautocomplete">
+        <h3>{{question.label}}</h3>
         <mat-list [formArrayName] = "key">
             <mat-list-item>
 
@@ -45,7 +46,7 @@
                   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                     <mat-option *ngFor="let option of question.options"  [value]="option">{{option.label}}</mat-option>
                   </mat-autocomplete>
-                <button (click)="addItem(key)">Add</button>
+                <button mat-icon-button (click)="addItem(key)"><mat-icon>add</mat-icon></button>
             </mat-list-item>
             <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
               {{item.label}}
@@ -53,7 +54,7 @@
                 {{item[form]}}
               </span> -->
               
-              <button mat-button (click)="deleteArrayItem(i, key)">Delete</button>
+              <button mat-icon-button color="warn" (click)="deleteArrayItem(i, key)"><mat-icon>delete</mat-icon></button>
             </mat-list-item>
           </mat-list>
                 
@@ -64,7 +65,7 @@
                 <mat-form-field>
                     <input [disabled]="this.form.get(key)?.disabled" type="text" #arrayinputfield matInput>
                   </mat-form-field>
-                <button [disabled]="this.form.get(key)?.disabled" (click)="addItem(key, arrayinputfield)">Add</button>
+                <button mat-mini-fab [disabled]="this.form.get(key)?.disabled" (click)="addItem(key, arrayinputfield)"><mat-icon>plus</mat-icon></button>
             </mat-list-item>
             <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
               {{item}}
@@ -79,10 +80,8 @@
             <button mat-button (click)="openDialog(question)">Agregar item</button>
           </mat-list-item>
           <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
-                <div  *ngFor="let li of item |keys">
-                    {{li}} : {{item[li]}}
-                </div>
-            <button mat-button (click)="deleteArrayItem(i, key)">Delete</button>
+                {{item.label}}
+            <button mat-button (click)="deleteArrayItem(i, key)"><mat-icon>delete</mat-icon></button>
           </mat-list-item>
         </mat-list>
     </div>

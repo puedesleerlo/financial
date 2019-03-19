@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { CoreComponent } from './core/core.component';
 import { FormResolver } from './form-shell/form.resolver';
 import { ItemResolver } from './form-shell/item.resolver';
+import { CanActivateViaAuthGuard } from '../auth/auth.guard';
 const routes:Routes = [
   {
     path: 'admin/:id',
@@ -24,7 +25,7 @@ const routes:Routes = [
       {
         path: "",
         component: FormShellComponent,
-        data: {api: "forms/"},
+        data: {api: "admin/"},
         // resolve: {form: FormResolver},
       },
       {
@@ -39,11 +40,10 @@ const routes:Routes = [
     path: 'forms/:id',
     component: CoreComponent,
     data: {
-      roles: ["admin"],
       api: "forms/",
       apiForm: "form"
     },
-    canActivate: [AuthRolesGuard],
+    canActivate: [CanActivateViaAuthGuard],
     resolve: {items: ResolverApi, group: FormResolver}, //Aquí se obtiene el formulario
     children: [
       {
@@ -67,7 +67,7 @@ const routes:Routes = [
     CommonModule,
     RouterModule.forChild(routes),
   ],
-  providers: [FormResolver, ResolverApi, AuthRolesGuard, ItemResolver],
+  providers: [FormResolver, ResolverApi, AuthRolesGuard, ItemResolver, CanActivateViaAuthGuard],
   exports: [RouterModule],
   declarations: []
 })
