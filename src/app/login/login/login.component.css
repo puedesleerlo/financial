@@ -14,3 +14,10 @@
 .formulario {
     width: 100%;
 }
+.logo {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    height: 300px;
+    align-items: center;
+    justify-items: center;
+}
