@@ -14,6 +14,7 @@ const routes:Routes = [
     component: CoreComponent,
     data: {
       roles: ["admin"],
+      api: "admin/"
     },
     canActivate: [AuthRolesGuard],
     resolve: {items: ResolverApi},
@@ -34,8 +35,27 @@ const routes:Routes = [
   },
   {
     path: 'forms/:id',
-    component: FormShellComponent,
-    resolve: {info: FormNewResolver}
+    component: CoreComponent,
+    data: {
+      roles: ["admin"],
+      api: "forms/"
+    },
+    canActivate: [AuthRolesGuard],
+    resolve: {items: ResolverApi},
+    children: [
+      {
+        path: "",
+        component: FormShellComponent,
+        data: {api: "forms/"},
+        resolve: {form: FormResolver},
+      },
+      {
+        path: ":item",
+        data: {api: "forms/"},
+        component: FormShellComponent,
+        resolve: {form: FormResolver},
+      }
+    ]
   },
 ]
 

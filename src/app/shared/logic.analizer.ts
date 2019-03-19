@@ -59,6 +59,12 @@ export class Conditional {
             },
             PriExp_quote: function(open, exp, close) {
               return exp.sourceString
+            },
+            booltrue: function(e) {
+              return true
+            },
+            boolfalse: function(e) {
+              return false
             }
           }).addOperation("subscribers", {
             PriExp_vari: function(e) {
@@ -164,10 +170,17 @@ export class Conditional {
       | PriExp "!=" PriExp --des
       | alnum+ ">" alnum+ --mayor
       | alnum+ "<" alnum+ --menor
+      | booltrue | boolfalse
   
     PriExp
       = "(" Exp ")"  -- paren
       | alnum+ --vari 
       | "'" alnum+ "'" --quote
+
+    booltrue
+    = "true"
+
+    boolfalse
+    = "false"
   }
   `

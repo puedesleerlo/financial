@@ -63,6 +63,7 @@ export class QuestionComponent implements OnChanges {
     control.removeAt(index)
   }
   addItem(key: string, info): void {
+    console.log(info.value)
     let control = <FormArray>this.getArrayControl(key);
     let field = new FormControl(info.value)
     control.push(field)

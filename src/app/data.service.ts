@@ -81,9 +81,9 @@ export class DataService {
   }
 
   /** DELETE: delete the Data from the server */
-  deleteData (id: number): Observable<{}> {
-    const url = `${this.url}/${id}`; // DELETE api/Dataes/42
-    return this.http.delete(url, httpOptions)
+  deleteData (): Observable<{}> {
+    const url = `${this.url}/delete`; // DELETE api/Dataes/42
+    return this.http.delete(this.url, httpOptions)
       .pipe(
         catchError(this.handleError('deleteData'))
       );

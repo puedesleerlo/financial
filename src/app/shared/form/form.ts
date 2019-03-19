@@ -58,6 +58,7 @@ export abstract class Form {
     buildGroup(questions:Field[], validator = null) {
         var group = this.prepareGroup(questions)
         var form = this.formBuilder.group(group, { validator });
+        console.log("verificar si aquí cambió el cero", form)
         return form
     }
     prepareGroup(questions: Field[]): AbstractGroup {
@@ -69,16 +70,25 @@ export abstract class Form {
             // console.log("field", field);
             let validators = this.getValidators(field.validation) //Busca los validadores
             let formcontrol:AbstractControl;
-            if(field.type == "array") {
-                console.log("entra acá", field.value);
-                formcontrol = this.buildArray((field.value || []), field.arrayschema, validators) //Construye el formulario de arreglos
-            }
-            else if (field.type =="simplearray"){
-                console.log("simple array", field.value);
-                formcontrol = this.buildSimpleArray((field.value || []), validators)
-            }
-            else {
-                formcontrol = this.formBuilder.control(field.value, validators)
+            switch (field.type) {
+                case "array":
+                    console.log("entra acá", field.value);
+                    formcontrol = this.buildArray((field.value || []), field.arrayschema, validators)
+                    break;
+                case "simplearray":
+                    console.log("simple array", field.value);
+                    formcontrol = this.buildSimpleArray((field.value || []), validators)
+                    break;
+                case "number":
+                    formcontrol = this.formBuilder.control(field.value, validators)
+                    console.log("type number", formcontrol)
+                    break;
+                case "string":
+                    formcontrol = this.formBuilder.control(field.value, validators)
+                    break;
+                default:
+                    formcontrol = this.formBuilder.control(field.value, validators)
+                    break;
             }
             controls[field.key] = formcontrol
         })
@@ -129,7 +139,7 @@ export abstract class Form {
         return this.formBuilder.array(arrays, validators || CustomValidators.lengthArray());
     }
     onValueChanged(data) {
-        console.log("hola", data)
+        // console.log("hola", data)
         // console.log("value changed", this.form)
         // if (!this.form) { return; }
         // this.formErrors = errorRecursion(this.form, this.validationMessages);

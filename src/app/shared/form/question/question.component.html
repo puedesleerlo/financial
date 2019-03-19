@@ -17,7 +17,7 @@
     </div>
     <mat-form-field *ngSwitchCase="'disabled'">
         <input matInput [formControlName]="key"
-        [id]="key" [type]="question.type" [value]="question.value.value" [placeholder]="question.label">
+        [id]="key" [type]="question.type" [value]="question.value" [placeholder]="question.label">
     </mat-form-field>
     <div *ngSwitchCase="'hidden'">
         <input [formControlName]="key"

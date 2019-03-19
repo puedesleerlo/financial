@@ -15,9 +15,9 @@ export class FormResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     let id = route.paramMap.get('item');
     let stage = route.parent.paramMap.get('id')
-    this.ds.setURL("admin/"+stage)
+    this.ds.setURL(route.data.api+stage)
     let customMap = map((val:any) => {
-      let form = val.admin
+      let form = val.item
       console.log("esto es lo que se recibe", form);
       // if(form.forms) {
       //   form.forms.forEach(form => {

@@ -29,6 +29,7 @@ export class FormComponent extends Form implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.buildForm(this.questions)
+    this.save()
   }
   save() {
    this.up.emit(this.form)
@@ -41,6 +42,7 @@ export class FormComponent extends Form implements OnInit, OnChanges {
     this.remove.emit("hola")
   }
   IsValid(status) {
+    console.log("El status cambió", status, this.form)
     status == "VALID" ? this.save(): ""
   }
 
