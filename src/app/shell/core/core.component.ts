@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Model} from '../../models/model';
 import { Itemize } from '../../models/itemize';
-import { FormSample } from 'src/assets/admin.data';
-import { relative } from 'path';
 
 @Component({
   selector: 'app-core',
