@@ -108,7 +108,7 @@ export abstract class Form {
         var formArray = []
         array.forEach(dato => {
             console.log("datos", dato)
-            var formcontrol = this.formBuilder.control(dato)
+            var formcontrol = this.formBuilder.group(dato)
             console.log("form array", formcontrol)
             formArray.push(formcontrol)
         })

@@ -1,9 +1,15 @@
+<mat-toolbar color="primary">
+    <span>Teleforms</span>
+  </mat-toolbar>
 <div class="main">
-    <app-list [items]="items" 
-    [listType]="listType" 
-    [keys]="keys"
-    (selected)="selection($event)"></app-list>
-    <div>
+  <div class="datos">
+      <app-list [items]="items" 
+      [listType]="listType" 
+      [keys]="keys"
+      (selected)="selection($event)"></app-list>
+  </div>
+    
+    <div class="formularios">
         <!-- <nav mat-tab-nav-bar>
             <a mat-tab-link
                *ngFor="let link of lists"

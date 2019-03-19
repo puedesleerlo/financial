@@ -11,7 +11,7 @@ import { AuthService } from '../auth/auth.service';
     SharedModule,
     RouterModule.forChild([
       {
-        path: '',
+        path: 'login',
         component: LoginComponent
       }
     ])

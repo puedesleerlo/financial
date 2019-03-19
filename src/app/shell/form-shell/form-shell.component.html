@@ -1,9 +1,9 @@
 <h1>{{name}}</h1>
-  <mat-horizontal-stepper #stepper>
+  <mat-vertical-stepper #stepper>
     <mat-step *ngFor="let form of forms" [completed]="true">
-        <ng-template matStepLabel>{{form.name}}</ng-template>
-        <app-form [questions]="form.questions" (up)="getForm($event, form.name)"></app-form>
-        <button mat-button matStepperNext>Next</button>
+        <ng-template matStepLabel>{{form.label}}</ng-template>
+        <app-form [item]="item" [questions]="form.questions" (up)="getForm($event, form.key)"></app-form>
+        <button color="primary" mat-raised-button matStepperNext>Next</button>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>
@@ -15,5 +15,5 @@
         <button mat-button (click)="delete()">Delete</button>
       </div>
     </mat-step>
-  </mat-horizontal-stepper>
+  </mat-vertical-stepper>
 

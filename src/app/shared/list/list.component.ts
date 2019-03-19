@@ -10,8 +10,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class ListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() listType: string = "table"
   @Input() items: any[]
-  // @Input() model: any
-  @Input() keys: string[] = []
+  @Input() questions: any
+  @Input() keys: any[] = []
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Output() selected = new EventEmitter<Object[]>();
@@ -26,7 +26,8 @@ export class ListComponent implements OnInit, OnChanges, AfterViewInit {
     // this.keys.push("select")
   }
   get selectKeys() {
-    return ["select"].concat(this.keys)
+    //Parsea las claves ya que vienen en forma de objeto
+    return ["select"].concat(this.keys.map(key => key.key))
   }
 
   ngOnInit() { }

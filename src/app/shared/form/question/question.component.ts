@@ -5,6 +5,7 @@ import { MatDialog} from '@angular/material';
 import { QuestionDialog } from '../question-dialog/question-dialog.component';
 import {FormGroup as FormModel} from "../../../models/form.model"
 import { Conditional } from '../../logic.analizer';
+
 export interface Question {
   key: string,
   value: {
@@ -27,6 +28,8 @@ export interface Question {
 export class QuestionComponent implements OnChanges {
   @Input() question: Field;
   @Input() form: FormGroup;
+  inputControl = new FormControl('')
+
   imageSrc: string | ArrayBuffer;
   constructor(public dialog: MatDialog) { 
   }
@@ -62,12 +65,12 @@ export class QuestionComponent implements OnChanges {
     var control = <FormArray>this.getArrayControl(key)
     control.removeAt(index)
   }
-  addItem(key: string, info): void {
-    console.log(info.value)
+  addItem(key: string,): void {
+    console.log("el valor del item en el array es ", this.inputControl.value)
     let control = <FormArray>this.getArrayControl(key);
-    let field = new FormControl(info.value)
-    control.push(field)
-    info.value = ""
+    let newcontrol = new FormControl(this.inputControl.value)
+    control.push(newcontrol)
+    this.inputControl.setValue('')
   }
   openDialog(question: Field): void {
     let control = <FormArray>this.getArrayControl(question.key);//Le entrega un form array
@@ -93,7 +96,7 @@ export class QuestionComponent implements OnChanges {
     return control.disabled
   }
   displayFn(field?: FormModel): string | undefined {
-    return field ? field.name : undefined;
+    return field ? field.key : undefined;
   }
 }
 export interface Evento extends Event {

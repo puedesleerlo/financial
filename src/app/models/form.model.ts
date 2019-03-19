@@ -3,15 +3,15 @@ import { Model, Field } from "./model";
 
 export interface FormModel {
     name: string
-    endpoint: string
-    idname: string
+    endpoint?: string
+    idname?: string
     company?: string
     version?: string
     questions: Field[]
 }
 
 export interface FormGroup {
-    name: string
+    key: string
     endpoint: string
     forms: FormModel[]
     company: string

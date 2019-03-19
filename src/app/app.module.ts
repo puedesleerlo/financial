@@ -33,7 +33,7 @@ export function initSettings(settings: SettingsService) {
     HttpClientModule,
     RouterModule.forRoot([
       {
-        path: '**', redirectTo: ''
+        path: '**', redirectTo: 'login'
       }
     ]),
 

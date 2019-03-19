@@ -60,7 +60,7 @@ export class DataService {
     //   .pipe(
     //     catchError(this.handleError<any[]>('searchData', []))
     //   );
-    return this.http.get<any[]>(this.url + "/" + term)
+    return this.http.get<any[]>(this.url + "/"+ term)
       .pipe(
         catchError(this.handleError<any[]>('searchData', []))
       );

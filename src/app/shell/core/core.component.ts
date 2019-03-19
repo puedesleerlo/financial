@@ -12,7 +12,7 @@ import { FormSample } from 'src/assets/admin.data';
 export class CoreComponent implements OnInit {
   items: any[]
   item: Model = {}
-  model: any
+  questions: any[]
   idName: string = "ID"
   listType = "table"
   keys = []
@@ -21,14 +21,25 @@ export class CoreComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data:{items: any}) => {
+    this.route.data.subscribe((data:{items: any, group:any}) => {
       console.log(data)
       this.items = data.items
       let stage = this.route.snapshot.paramMap.get("id")
+      var leaderform = data.group.forms.filter(form => form.key ==data.group.leaderform);
+      console.log("leaderform", leaderform)
+      this.idName = data.group.idname
+      var displayColumns: any[] = leaderform[0].questions
+      var aditionalColumns = [
+        {key: "ID", label: "ID", type: "number"},
+        {key: "CreatedAt", label: "Creado en", type: "date"},
+        {key: "UpdatedAt", label: "Actualizado en", type: "date"}
+      ]
+      // this.route.children[0].data.subscribe(data => console.log(data))
       // this.listType = data.listType
-      this.keys = ["company", "displayinfo", "endpoint", "idname", "name","ID"]
+      this.keys = aditionalColumns.concat(displayColumns)
+      console.log("keys de columnas", displayColumns);
+      
       // this.model = FormSample[stage]
-      this.idName = "name"
       // console.log(this.model)
       // this.idName = this.model.idname
     })

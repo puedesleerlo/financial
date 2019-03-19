@@ -15,19 +15,28 @@ export class FormShellComponent implements OnInit {
   api: string
   questions: Field[] = []
   name: string
+  item: any = {}
   idName: string
   forms: FormGroup
   outputValue = {}
   constructor(private route: ActivatedRoute, private ds: DataService) { }
   //Este módulo es el que se conecta con la base de datos y recibe el formulario
   ngOnInit() {
-    this.route.data.subscribe((data:{form?: any, api?: string}) => {
+    this.route.data.subscribe((data:{form?: any, item?: string, api: string}) => {
 
-      console.log("Formulario obtenido", data)
-
-      this.name = data.form.name
-      this.forms = data.form.forms
+      console.log("Formulario obtenido", )
+      this.route.parent.data.subscribe(data => {
+        this.name = data.group.label
+        this.forms = data.group.forms
+      })
       
+      if(data.item) {
+        console.log("Este es el maravilloso item", data.item)
+        this.item = data.item
+
+        //You are a lucky boy, Tienes un bello item
+        //Ahora hay que particionar el itementre los grupos de formularios
+      }
       if(data.api) {
         console.log("ROUTA", )
         var id = this.route.snapshot.parent.paramMap.get("id")
@@ -53,15 +62,15 @@ export class FormShellComponent implements OnInit {
       values[key] = self.outputValue[key].value;
       Object.assign(absoluteform, self.outputValue[key].value)
     });
-    Object.keys(absoluteform).map(function(key){
-      // absoluteform
-      try {
-        absoluteform[key]= parseInt(absoluteform[key])
-      }
-      catch {
-        console.error("No se pudo cambiar a entero")
-      }
-    })
+    // Object.keys(absoluteform).map(function(key){
+    //   // absoluteform
+    //   try {
+    //     absoluteform[key]= parseInt(absoluteform[key])
+    //   }
+    //   catch {
+    //     console.error("No se pudo cambiar a entero")
+    //   }
+    // })
     console.log("values", absoluteform)
     this.ds.addData(absoluteform).subscribe(resp => {
       console.log(resp)

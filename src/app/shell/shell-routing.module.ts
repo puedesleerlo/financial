@@ -8,28 +8,30 @@ import { AuthRolesGuard } from '../auth/auth.roles.guard';
 import { environment } from 'src/environments/environment';
 import { CoreComponent } from './core/core.component';
 import { FormResolver } from './form-shell/form.resolver';
+import { ItemResolver } from './form-shell/item.resolver';
 const routes:Routes = [
   {
     path: 'admin/:id',
     component: CoreComponent,
     data: {
       roles: ["admin"],
-      api: "admin/"
+      api: "admin/",
+      apiForm: "form"
     },
     canActivate: [AuthRolesGuard],
-    resolve: {items: ResolverApi},
+    resolve: {items: ResolverApi, group: FormResolver},
     children: [
       {
         path: "",
         component: FormShellComponent,
-        data: {api: "admin/"},
-        resolve: {form: FormResolver},
+        data: {api: "forms/"},
+        // resolve: {form: FormResolver},
       },
       {
         path: ":item",
         data: {api: "admin/"},
         component: FormShellComponent,
-        resolve: {form: FormResolver},
+        resolve: {item: ItemResolver},
       }
     ]
   },
@@ -38,22 +40,23 @@ const routes:Routes = [
     component: CoreComponent,
     data: {
       roles: ["admin"],
-      api: "forms/"
+      api: "forms/",
+      apiForm: "form"
     },
     canActivate: [AuthRolesGuard],
-    resolve: {items: ResolverApi},
+    resolve: {items: ResolverApi, group: FormResolver}, //Aquí se obtiene el formulario
     children: [
       {
         path: "",
         component: FormShellComponent,
         data: {api: "forms/"},
-        resolve: {form: FormResolver},
+        // resolve: {form: FormResolver},
       },
       {
         path: ":item",
         data: {api: "forms/"},
         component: FormShellComponent,
-        resolve: {form: FormResolver},
+        resolve: {item: ItemResolver}, //Aquí se obtiene el item
       }
     ]
   },
@@ -64,7 +67,7 @@ const routes:Routes = [
     CommonModule,
     RouterModule.forChild(routes),
   ],
-  providers: [FormResolver, ResolverApi, AuthRolesGuard],
+  providers: [FormResolver, ResolverApi, AuthRolesGuard, ItemResolver],
   exports: [RouterModule],
   declarations: []
 })

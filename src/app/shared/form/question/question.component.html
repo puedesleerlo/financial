@@ -23,6 +23,12 @@
         <input [formControlName]="key"
         [id]="key" [type]="question.type" [value]="question.value">
     </div>
+
+    <mat-form-field  *ngSwitchCase="'simplearraydependency'" [id]="key"  >
+      <mat-select [formControlName]="key" [placeholder]="question.label">
+          <mat-option *ngFor="let opt of getArrayValue(question.dependency)"  [value]="opt.key">{{opt.label}}</mat-option>
+      </mat-select>
+    </mat-form-field>
     
     <mat-form-field  *ngSwitchCase="'dropdown'" [id]="key"  >
       <mat-select [formControlName]="key" [placeholder]="question.label">
@@ -34,15 +40,15 @@
             <mat-list-item>
 
                 <mat-form-field>
-                    <input [disabled]="isArrayDisabled(key)" type="text" #autocomplete matInput [matAutocomplete]="auto">
+                    <input [disabled]="isArrayDisabled(key)" [formControl]="inputControl" type="text" #autocomplete matInput [matAutocomplete]="auto">
                   </mat-form-field>
                   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let option of question.options"  [value]="option">{{option.name}}</mat-option>
+                    <mat-option *ngFor="let option of question.options"  [value]="option">{{option.label}}</mat-option>
                   </mat-autocomplete>
-                <button (click)="addItem(key, autocomplete)">Add</button>
+                <button (click)="addItem(key)">Add</button>
             </mat-list-item>
             <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
-              {{item}}
+              {{item.label}}
               <!-- <span *ngFor="let form of Object.keys(item)">
                 {{item[form]}}
               </span> -->

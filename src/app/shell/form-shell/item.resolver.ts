@@ -9,16 +9,16 @@ import { FormModel } from 'src/app/models/form.model';
 
  
 @Injectable()
-export class FormResolver implements Resolve<any> {
+export class ItemResolver implements Resolve<any> {
   constructor(private ds: DataService, private router: Router) {}
   sample$:BehaviorSubject<any> = new BehaviorSubject<any>(FormSample["forms"])
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    // let id = route.paramMap.get('item');
-    let stage = route.paramMap.get('id')
-    this.ds.setURL(route.data.api + route.data.apiForm)
+    let id = route.paramMap.get('item');
+    let stage = route.parent.paramMap.get('id')
+    this.ds.setURL(route.data.api+stage)
     let customMap = map((val:any) => {
-      let form = val.form
-      console.log("esto es lo que se recibe", form);
+      let form = val.item
+      console.log("esto es lo que se recibe en el componente hijo", form);
       // if(form.forms) {
       //   form.forms.forEach(form => {
       //     form.questions.forEach(question => {
@@ -28,6 +28,6 @@ export class FormResolver implements Resolve<any> {
       // }
       return form
     })
-    return customMap(this.ds.searchData(stage))
+    return customMap(this.ds.searchData(id || "newform"))
   }
 }

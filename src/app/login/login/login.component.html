@@ -1,9 +1,15 @@
-<form [formGroup] ='loginForm'> 
-  <mat-form-field>
-    <input matInput formControlName="email" placeholder="Email" value="">
-  </mat-form-field>
-  <mat-form-field>
-  <input matInput type="password" formControlName="password" placeholder="Contraseña" value="">
-  </mat-form-field>
-  <button (click)='login()'>Login</button>
+<form [formGroup] ='loginForm' class="login-layout"> 
+  <div class="logo">
+    
+  </div>
+  <div class="formularios">
+      <mat-form-field class="formulario">
+          <input matInput formControlName="email" placeholder="Email" value="">
+        </mat-form-field>
+        <mat-form-field class="formulario">
+        <input matInput type="password" formControlName="password" placeholder="Contraseña" value="">
+        </mat-form-field>
+        <button (click)='login()'>Login</button>
+  </div>
+  
 </form>
