@@ -6,6 +6,7 @@ import { Model, Field, Option } from '../../models/model';
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { Conditional } from '../logic.analizer';
 import { ValidationText } from 'src/assets/validation.text';
+import { isDevMode } from '@angular/core';
 
 interface Group {
     [key: string]: [any, any[]]
@@ -35,10 +36,10 @@ export abstract class Form {
 
     conditionalSubs() {
         this.questions.forEach(field => {
-            console.log("Empieza a buscar por condiciones", field);
+            if(isDevMode()) console.log("Empieza a buscar por condiciones", field);
             
             if (field.exist) {
-                console.log("Tiene la condición no exist");
+                if(isDevMode()) console.log("Tiene la condición no exist");
                 
                 new Conditional(this.form, field, "exist").activateSubs()
             }
@@ -59,13 +60,13 @@ export abstract class Form {
     buildGroup(questions:Field[], validator = null) {
         var group = this.prepareGroup(questions)
         var form = this.formBuilder.group(group, { validator });
-        console.log("verificar si aquí cambió el cero", form)
+        if(isDevMode()) console.log("verificar si aquí cambió el cero", form)
         return form
     }
     prepareGroup(questions: Field[]): AbstractGroup {
         //Recibe un arreglo de preguntas
         var controls = {}
-        console.log(questions);
+        if(isDevMode()) console.log(questions);
         questions.map((field:Field) => {
             let control = {}
             // console.log("field", field);
@@ -73,16 +74,16 @@ export abstract class Form {
             let formcontrol:AbstractControl;
             switch (field.type) {
                 case "array":
-                    console.log("entra acá", field.value);
+                if(isDevMode()) console.log("entra acá", field.value);
                     formcontrol = this.buildArray((field.value || []), field.arrayschema, validators)
                     break;
                 case "simplearray":
-                    console.log("simple array", field.value);
+                if(isDevMode()) console.log("simple array", field.value);
                     formcontrol = this.buildSimpleArray((field.value || []), validators)
                     break;
                 case "number":
                     formcontrol = this.formBuilder.control(field.value, validators)
-                    console.log("type number", formcontrol)
+                    if(isDevMode()) console.log("type number", formcontrol)
                     break;
                 case "string":
                     formcontrol = this.formBuilder.control(field.value, validators)
@@ -107,26 +108,26 @@ export abstract class Form {
     buildSimpleArray(array:any[], validators?) { // Es un arreglo de strings o de datos básicos. no son formularios sino controles
         var formArray = []
         array.forEach(dato => {
-            console.log("datos", dato)
+            if(isDevMode()) console.log("datos", dato)
             var formcontrol = this.formBuilder.group(dato)
-            console.log("form array", formcontrol)
+            if(isDevMode()) console.log("form array", formcontrol)
             formArray.push(formcontrol)
         })
         return this.formBuilder.array(formArray, validators || CustomValidators.lengthArray())
     }
     buildArray(array: any[] = [], schema: any[] = [], validators?) { //Los arrays reciben los valores aparte de los esquemas
-        console.log("mostrar array de Form", array)
-        console.log("mostrar array de Schema", schema)
+        if(isDevMode()) console.log("mostrar array de Form", array)
+        if(isDevMode()) console.log("mostrar array de Schema", schema)
         var arrays=[]
         array.forEach(dato => {
             var prosArray = []
             schema.forEach(question => {
                 var toquestion:any = {}
-                console.log("mostrar question", question)
-                console.log("mostrar dato", dato)
+                if(isDevMode()) console.log("mostrar question", question)
+                if(isDevMode()) console.log("mostrar dato", dato)
                 Object.assign(toquestion, question)
                 toquestion.value = dato[question.key]
-                console.log("toquestion", toquestion); //Pregunta con el valor del formulario
+                if(isDevMode()) console.log("toquestion", toquestion); //Pregunta con el valor del formulario
                 prosArray.push(toquestion) //Hace un arreglo de las preguntas
             })
             var groupForm = this.buildGroup(prosArray) //Convierte el arreglo de preguntas en un formulario
@@ -134,7 +135,7 @@ export abstract class Form {
             
         })
         // var prosArray = array.map()
-        console.log("mostrar array de Form después", arrays)
+        if(isDevMode()) console.log("mostrar array de Form después", arrays)
         
         return this.formBuilder.array(arrays, validators || CustomValidators.lengthArray());
     }

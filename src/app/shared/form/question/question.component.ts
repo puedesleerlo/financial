@@ -1,4 +1,4 @@
-import { Component,  Input, OnChanges } from '@angular/core';
+import { Component,  Input, OnChanges, isDevMode } from '@angular/core';
 import { FormGroup, FormArray, FormControl} from '@angular/forms';
 import { Field, Option } from '../../../models/model';
 import { MatDialog} from '@angular/material';
@@ -38,7 +38,7 @@ export class QuestionComponent implements OnChanges {
     return this.question.key
   }
   readURL(event: Evento): void {
-    console.log(event.target)
+    if(isDevMode()) console.log(event.target)
     if (event.target.files && event.target.files[0]) {
         const file = event.target.files[0];
 
@@ -66,7 +66,7 @@ export class QuestionComponent implements OnChanges {
     control.removeAt(index)
   }
   addItem(key: string,): void {
-    console.log("el valor del item en el array es ", this.inputControl.value)
+    if(isDevMode()) console.log("el valor del item en el array es ", this.inputControl.value)
     let control = <FormArray>this.getArrayControl(key);
     let newcontrol = new FormControl(this.inputControl.value)
     control.push(newcontrol)
@@ -74,7 +74,7 @@ export class QuestionComponent implements OnChanges {
   }
   openDialog(question: Field): void {
     let control = <FormArray>this.getArrayControl(question.key);//Le entrega un form array
-    console.log("schema", question.arrayschema) //es un array
+    if(isDevMode()) console.log("schema", question.arrayschema) //es un array
     let dialogRef = this.dialog.open(QuestionDialog, {
       width: '450px',
       height: '300px',
@@ -82,7 +82,7 @@ export class QuestionComponent implements OnChanges {
     });
 
     dialogRef.afterClosed().subscribe((result:FormGroup) => {
-      console.log('The dialog was closed', result);
+      if(isDevMode()) console.log('The dialog was closed', result);
       if(result) {
         // console.log(control)
         control.push(result)

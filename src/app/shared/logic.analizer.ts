@@ -2,6 +2,7 @@ import * as ohm from "ohm-js"
 import { FormGroup, AbstractControl } from "@angular/forms";
 import { Field } from "../models/model";
 import { Util } from "./util.helper";
+import { isDevMode } from "@angular/core";
 
 export class Conditional {
     grammar = ohm.grammar(logicGrammar)
@@ -68,7 +69,7 @@ export class Conditional {
             }
           }).addOperation("subscribers", {
             PriExp_vari: function(e) {
-                console.log("el nombre del campo dependiente es", e.sourceString)
+              if(isDevMode()) console.log("el nombre del campo dependiente es", e.sourceString)
                 var control = self.form.get(e.sourceString)
                 if(control) self.setSubscriber(control)
                 else Util.TE("No se encontró el nombre del campo")
@@ -87,8 +88,8 @@ export class Conditional {
         
         formcontrol.valueChanges.subscribe(value => {
             this.runfuntion(this.match())
-            console.log("El resultado del match fue %s", this.match());
-            console.log("Cambió el valor a %s", value);
+            if(isDevMode()) console.log("El resultado del match fue %s", this.match());
+            if(isDevMode()) console.log("Cambió el valor a %s", value);
             
             //Hay que obtener el campo en el cual se aplica la condición, correr la operación de lógica
             //y ver si se cumple o no
@@ -99,19 +100,19 @@ export class Conditional {
         this.question[this.purpose + "d"] = pass
         switch (this.purpose) {
             case "disable":
-            console.log("Entra al caso disable");
+            if(isDevMode())  console.log("Entra al caso disable");
             
             var control = self.form.get(self.question.key)
             if (control) {
                 pass ? control.disable() : control.enable()
-                console.log("hay control", control.disabled)
+                if(isDevMode()) console.log("hay control", control.disabled)
             }
             else Util.TE("No se encontró el nombre del campo")
                 
 
                 break;
             case "exist":
-            console.log(self.formcontrol);
+            if(isDevMode()) console.log(self.formcontrol);
                 self.form.removeControl(self.question.key)
                 pass ? self.form.addControl(self.question.key, self.formcontrol): 
                 self.form.removeControl(self.question.key);

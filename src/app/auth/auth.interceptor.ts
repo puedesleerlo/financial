@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, isDevMode } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
@@ -12,7 +12,7 @@ export class AuthInterceptorService implements HttpInterceptor {
  
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const authService = this.injector.get(AuthService);
-        console.log(req)
+        if(isDevMode()) console.log(req)
         const authRequest = req.clone({
             // tslint:disable-next-line:max-line-length
             headers: req.headers.set('Authorization', 'Bearer ' + authService.token)
@@ -22,11 +22,11 @@ export class AuthInterceptorService implements HttpInterceptor {
             tap(event => {
                 if (event instanceof HttpResponse) {
                    
-                  console.log(" all looks good", event);
+                  if(isDevMode()) console.log(" all looks good", event);
                   // http response status code
                   if(event.body.status) this.showFlow(event.body.message)
                   else {
-                    console.log("event", event)
+                    if(isDevMode()) console.log("event", event)
                     this.showError(event.body.message)}
                   // shows success snackbar with green background
                   //this.snackBar.openSnackBar(event.statusText,'Close','green-snackbar');
@@ -34,7 +34,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               }, error => {
                  // http response status code
                  var jsonError = JSON.parse(error.error.text)
-                    console.log("show error message", jsonError);
+                 if(isDevMode()) console.log("show error message", jsonError);
                     // show error snackbar with red background
                     
                     this.showError(jsonError["message"])

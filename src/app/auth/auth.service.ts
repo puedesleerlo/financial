@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, isDevMode } from '@angular/core';
 import { RequestOptions, Response } from '@angular/http';
  
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -49,7 +49,7 @@ export class AuthService {
             (res: any) => {
                 localStorage.setItem(this.TOKEN_KEY, res.account.token);
                 localStorage.setItem(this.ROLE_KEY, res.account.role);
-                console.log(res)
+                if(isDevMode()) console.log(res)
                 this.router.navigateByUrl('/');
             }
         );

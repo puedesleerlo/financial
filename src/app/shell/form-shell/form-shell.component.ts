@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, isDevMode } from '@angular/core';
 import { ActivatedRoute, Route, UrlSegment } from '@angular/router';
 import { DataService } from '../../data.service';
 import { environment } from 'src/environments/environment';
@@ -23,16 +23,15 @@ export class FormShellComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data:{form?: any, item?: string, api: string}) => {
 
-      console.log("Formulario obtenido", )
+      if(isDevMode()) console.log("Formulario obtenido en form shell", data.form)
       this.route.parent.data.subscribe(data => {
         this.name = data.group.label
         this.forms = data.group.forms
       })
       
       this.route.data.subscribe(data => {
-        console.log("el item cambia", data.item)
+        if(isDevMode()) console.log("el item cambia", data.item)
         if(data.item) {
-          console.log("Este es el maravilloso item", data.item)
           this.item = data.item
         }
         else this.item = {}
@@ -40,7 +39,6 @@ export class FormShellComponent implements OnInit {
       
       
       if(data.api) {
-        console.log("ROUTA", )
         var id = this.route.snapshot.parent.paramMap.get("id")
         this.ds.setURL(data.api + id)
       }

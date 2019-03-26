@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, isDevMode } from '@angular/core';
 import { Form } from './form';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormModel } from 'src/app/models/form.model';
@@ -22,16 +22,16 @@ export class FormComponent extends Form implements OnInit, OnChanges {
 
 
   ngOnInit() {
-    console.log("questions en form.components", this.questions)
+    if(isDevMode()) console.log("questions en form.components", this.questions)
     this.buildForm(this.patchValue(this.questions, this.item))
     // this.form.patchValue(this.item)
     // this.form.updateValueAndValidity()
-    console.log("formulario actual", this.form)
+    if(isDevMode()) console.log("formulario actual", this.form)
     this.form.statusChanges.subscribe(status => this.IsValid(status))
   }
 
   ngOnChanges() {
-    console.log("AQUÍ HUBO CAMBIOSS")
+    if(isDevMode()) console.log("AQUÍ HUBO CAMBIOSS")
     
     this.buildForm(this.patchValue(this.questions, this.item))
 
@@ -40,13 +40,13 @@ export class FormComponent extends Form implements OnInit, OnChanges {
     this.save()
   }
   patchValue(questions, item) {
-    console.log("El item está vacío", item, this.form)
+    if(isDevMode()) console.log("El item está vacío", item, this.form)
     
     if(!_.isEmpty(item)) { //muta el objeto
       var localquestions = []
       questions.forEach(question => {
         var questionwithvalues = question
-        console.log("las preguntas son estas", question)
+        if(isDevMode()) console.log("las preguntas son estas", question)
         questionwithvalues.value = item[question.key]
         localquestions.push(questionwithvalues)
       })
@@ -65,7 +65,7 @@ export class FormComponent extends Form implements OnInit, OnChanges {
     this.remove.emit("hola")
   }
   IsValid(status) {
-    console.log("El status cambió", status, this.form)
+    if(isDevMode()) console.log("El status cambió", status, this.form)
     status == "VALID" ? this.save(): ""
   }
 

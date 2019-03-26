@@ -1,4 +1,4 @@
-import { Injectable }             from '@angular/core';
+import { Injectable, isDevMode }             from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot,
          ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, BehaviorSubject }             from 'rxjs';
@@ -18,7 +18,7 @@ export class ItemResolver implements Resolve<any> {
     this.ds.setURL(route.data.api+stage)
     let customMap = map((val:any) => {
       let form = val.item
-      console.log("esto es lo que se recibe en el componente hijo", form);
+      if(isDevMode()) console.log("esto es lo que se recibe en el componente hijo", form);
       // if(form.forms) {
       //   form.forms.forEach(form => {
       //     form.questions.forEach(question => {

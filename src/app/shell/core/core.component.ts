@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Model} from '../../models/model';
 import { Itemize } from '../../models/itemize';
 import { ExcelService } from 'src/app/utils/excel.service';
 import * as _ from "lodash"
+import { environment } from 'src/environments/environment.prod';
 @Component({
   selector: 'app-core',
   templateUrl: './core.component.html',
@@ -27,9 +28,9 @@ export class CoreComponent implements OnInit {
       this.items = data.items
       let stage = this.route.snapshot.paramMap.get("id")
       this.url = data.api + stage;
-      console.log("url en core", this.url)
+      if(isDevMode()) console.log("url en core", this.url)
       var leaderform = _.flatten(data.group.forms.map(form => form.questions))
-      console.log("leaderform", leaderform)
+      if(isDevMode()) console.log("leaderform", leaderform)
       this.idName = data.group.idname
       var displayColumns: any[] = leaderform
       var aditionalColumns = [
@@ -40,7 +41,7 @@ export class CoreComponent implements OnInit {
       // this.route.children[0].data.subscribe(data => console.log(data))
       // this.listType = data.listType
       this.keys = aditionalColumns.concat(displayColumns)
-      console.log("keys de columnas", displayColumns);
+      if(isDevMode())  console.log("keys de columnas", displayColumns);
       
       // this.model = FormSample[stage]
       // console.log(this.model)
@@ -50,6 +51,10 @@ export class CoreComponent implements OnInit {
   
   selection(ev: Itemize[]) {
     this.router.navigate(['./' +  ev[0][this.idName]], {relativeTo: this.route});
+  }
+
+  gotoGrafana() {
+    document.location.href = environment.base + "grafana";
   }
 
   exportToExcel() {

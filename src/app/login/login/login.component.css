@@ -21,3 +21,7 @@
     align-items: center;
     justify-items: center;
 }
+.gotoform {
+    display: block;
+    margin-top: 10px;
+}
