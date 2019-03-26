@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from '../data.service';
 import { routesCalculator } from '../routesFunction';
+import { environment } from 'src/environments/environment';
  
 @Injectable()
 export class AuthService {
     
-    API_URL = 'http://localhost/go';
+    API_URL = environment.api;
     TOKEN_KEY = 'token';
     ROLE_KEY = "role"
     user: any = <any>{}
@@ -44,7 +45,7 @@ export class AuthService {
             password: pass
         };
  
-        this.http.post(this.API_URL + '/login', data, headers).subscribe(
+        this.http.post(this.API_URL + 'login', data, headers).subscribe(
             (res: any) => {
                 localStorage.setItem(this.TOKEN_KEY, res.account.token);
                 localStorage.setItem(this.ROLE_KEY, res.account.role);

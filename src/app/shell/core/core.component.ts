@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Model} from '../../models/model';
 import { Itemize } from '../../models/itemize';
 import { ExcelService } from 'src/app/utils/excel.service';
-
+import * as _ from "lodash"
 @Component({
   selector: 'app-core',
   templateUrl: './core.component.html',
@@ -28,10 +28,10 @@ export class CoreComponent implements OnInit {
       let stage = this.route.snapshot.paramMap.get("id")
       this.url = data.api + stage;
       console.log("url en core", this.url)
-      var leaderform = data.group.forms.filter(form => form.key ==data.group.leaderform);
+      var leaderform = _.flatten(data.group.forms.map(form => form.questions))
       console.log("leaderform", leaderform)
       this.idName = data.group.idname
-      var displayColumns: any[] = leaderform[0].questions
+      var displayColumns: any[] = leaderform
       var aditionalColumns = [
         {key: "ID", label: "ID", type: "number"},
         {key: "CreatedAt", label: "Creado en", type: "date"},
@@ -62,9 +62,9 @@ export class CoreComponent implements OnInit {
 
   }
   refresh(): void {
-    setTimeout(() => {
+    // setTimeout(() => {
       window.location.reload();
-    }, 500)
+    // }, 500)
     
   }
 }
