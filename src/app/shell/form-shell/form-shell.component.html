@@ -1,4 +1,4 @@
-<h1>{{name}}</h1>
+<h1 class="groupname">{{name}}</h1>
   <mat-vertical-stepper #stepper linear>
     <mat-step *ngFor="let form of forms" [completed]="isCompleted(form.key)">
         <ng-template matStepLabel>{{form.label}}</ng-template>

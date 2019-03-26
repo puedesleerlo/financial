@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api: "http://localhost/go/"
+  api: "http://localhost/go/",
+  NODE_TLS_REJECT_UNAUTHORIZED:1
 };
 
 /*

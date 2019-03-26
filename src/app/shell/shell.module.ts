@@ -14,6 +14,7 @@ import { ResolverApi } from './core/resolverApi';
 import { environment } from 'src/environments/environment';
 import { ShellRoutingModule } from './shell-routing.module';
 import { AdminFormComponent } from './admin-form/admin-form.component';
+import { ExcelService } from '../utils/excel.service';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { AdminFormComponent } from './admin-form/admin-form.component';
       useClass: AuthInterceptorService,
       multi: true
   },
+  ExcelService
   ],
   declarations: [MenuComponent, CoreComponent, FormShellComponent, AdminFormComponent]
 })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Model} from '../../models/model';
 import { Itemize } from '../../models/itemize';
+import { ExcelService } from 'src/app/utils/excel.service';
 
 @Component({
   selector: 'app-core',
@@ -18,7 +19,7 @@ export class CoreComponent implements OnInit {
   lists = []
   endpoint: string;
   url: string;
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private exs: ExcelService) { }
 
   ngOnInit() {
     this.route.data.subscribe((data:{items: any, group:any, api:any}) => {
@@ -49,6 +50,10 @@ export class CoreComponent implements OnInit {
   
   selection(ev: Itemize[]) {
     this.router.navigate(['./' +  ev[0][this.idName]], {relativeTo: this.route});
+  }
+
+  exportToExcel() {
+    this.exs.exportAsExcelFile(this.items, this.url)
   }
 
   navigateToHere() {

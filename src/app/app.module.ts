@@ -34,7 +34,7 @@ export function initSettings(settings: SettingsService) {
     HttpClientModule,
     RouterModule.forRoot([
       {
-        path: '**', redirectTo: '/forms/aassa'
+        path: '**', redirectTo: '/login'
       }
     ]),
     BrowserAnimationsModule,

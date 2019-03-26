@@ -25,16 +25,19 @@ export class AuthInterceptorService implements HttpInterceptor {
                   console.log(" all looks good", event);
                   // http response status code
                   if(event.body.status) this.showFlow(event.body.message)
-                  else this.showError(event.body.message)
+                  else {
+                    console.log("event", event)
+                    this.showError(event.body.message)}
                   // shows success snackbar with green background
                   //this.snackBar.openSnackBar(event.statusText,'Close','green-snackbar');
                 }
               }, error => {
                  // http response status code
-  
-                    console.log("show error message", error.error.message);
+                 var jsonError = JSON.parse(error.error.text)
+                    console.log("show error message", jsonError);
                     // show error snackbar with red background
-                    this.showError(error.error.message)
+                    
+                    this.showError(jsonError["message"])
   
               })
             );
