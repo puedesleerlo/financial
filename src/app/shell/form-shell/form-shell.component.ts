@@ -71,9 +71,9 @@ export class FormShellComponent implements OnInit {
     })
   }
   refresh(): void {
-    // setTimeout(() => {
+    setTimeout(() => {
       window.location.reload();
-    // }, 2000)
+    }, 500)
     
   }
   getForm(data, id) {

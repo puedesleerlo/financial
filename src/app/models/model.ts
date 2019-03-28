@@ -3,6 +3,7 @@ import { FormModel } from "./form.model";
 export class Field {
     value: any
     validation: Option[]
+    subform?: any
     exist?: string
     disable?:string
     active?: boolean

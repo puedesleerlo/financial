@@ -21,7 +21,7 @@
     </mat-form-field>
     <div *ngSwitchCase="'hidden'">
         <input [formControlName]="key"
-        [id]="key" [type]="question.type" [value]="question.value">
+        [id]="key" [type]="question.controltype" [value]="question.value">
     </div>
 
     <mat-form-field  *ngSwitchCase="'simplearraydependency'" [id]="key"  >
@@ -60,6 +60,7 @@
                 
     </div>
     <div *ngSwitchCase="'arrayinput'">
+        <h3>{{question.label}}</h3>
         <mat-list [formArrayName] = "key">
             <mat-list-item>
                 <mat-form-field>
@@ -74,17 +75,24 @@
           </mat-list> 
     </div>
     <div *ngSwitchCase="'arraymodal'">
+        <h3>{{question.label}}</h3>
         <mat-list [formArrayName] = "key">
           <mat-list-item>
             <!-- {{question.value |json}} -->
-            <button mat-button (click)="openDialog(question)">Agregar item</button>
+            <button mat-button (click)="openArrayDialog(question)">Agregar item</button>
           </mat-list-item>
           <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
                 {{item.label}}
+                <button mat-button (click)="openArrayItemDialog(question, i)"><mat-icon>edit</mat-icon></button>
             <button mat-button (click)="deleteArrayItem(i, key)"><mat-icon>delete</mat-icon></button>
           </mat-list-item>
         </mat-list>
     </div>
+    <div *ngSwitchCase="'formmodal'">
+        <h3>{{question.label}}</h3>
+        <button mat-button (click)="openDialog(question)">Llenar subformulario</button>
+        
+  </div>
     <div *ngSwitchCase="'arrayGrid'">
       <mat-grid-list>
         <mat-grid-tile *ngFor="let item of question.value"></mat-grid-tile>

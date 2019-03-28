@@ -74,11 +74,11 @@ export abstract class Form {
             let formcontrol:AbstractControl;
             switch (field.type) {
                 case "array":
-                if(isDevMode()) console.log("entra acá", field.value);
+                    if(isDevMode()) console.log("entra acá", field.value);
                     formcontrol = this.buildArray((field.value || []), field.arrayschema, validators)
                     break;
                 case "simplearray":
-                if(isDevMode()) console.log("simple array", field.value);
+                    if(isDevMode()) console.log("simple array", field.value);
                     formcontrol = this.buildSimpleArray((field.value || []), validators)
                     break;
                 case "number":
@@ -88,6 +88,9 @@ export abstract class Form {
                 case "string":
                     formcontrol = this.formBuilder.control(field.value, validators)
                     break;
+                // case "subform":
+                //     formcontrol = this.formBuilder.group(field.value, validators)
+                //     break;
                 default:
                     formcontrol = this.formBuilder.control(field.value, validators)
                     break;

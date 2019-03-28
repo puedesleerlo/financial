@@ -72,7 +72,7 @@ export class QuestionComponent implements OnChanges {
     control.push(newcontrol)
     this.inputControl.setValue('')
   }
-  openDialog(question: Field): void {
+  openArrayDialog(question: Field): void {
     let control = <FormArray>this.getArrayControl(question.key);//Le entrega un form array
     if(isDevMode()) console.log("schema", question.arrayschema) //es un array
     let dialogRef = this.dialog.open(QuestionDialog, {
@@ -90,6 +90,42 @@ export class QuestionComponent implements OnChanges {
       
     });
   }
+  openArrayItemDialog(question: Field, index:number): void {
+    let control = <FormArray>this.getArrayControl(question.key);//Le entrega un form array
+    if(isDevMode()) console.log("schema", question.arrayschema) //es un array
+    let dialogRef = this.dialog.open(QuestionDialog, {
+      width: '450px',
+      height: '300px',
+      data: {questions: question.arrayschema, item: control.at(index).value} //Le entrega un formulario
+    });
+
+    dialogRef.afterClosed().subscribe((result:FormGroup) => {
+      if(isDevMode()) console.log('The dialog was closed', result);
+      if(result) {
+        console.log("El grupo que se cambiará será", control.at(index))
+        control.at(index).patchValue(result.value)
+      }
+      
+    });
+  }
+  openDialog(question: Field, item:any = {}): void {
+    if(isDevMode()) console.log("schema", question.arrayschema) //es un array
+    let dialogRef = this.dialog.open(QuestionDialog, {
+      width: '450px',
+      height: '300px',
+      data: {questions: question.arrayschema, item} //Le entrega un formulario
+    });
+
+    dialogRef.afterClosed().subscribe((result:FormGroup) => {
+      if(isDevMode()) console.log('The dialog was closed', result);
+      if(result) {
+        // console.log(control)
+        question.subform = result
+      }
+      
+    });
+  }
+
   isArrayDisabled(key) {
     // console.log("disabled");
     

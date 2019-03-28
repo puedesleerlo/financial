@@ -66,7 +66,7 @@ export class FormComponent extends Form implements OnInit, OnChanges {
   }
   IsValid(status) {
     if(isDevMode()) console.log("El status cambió", status, this.form)
-    status == "VALID" ? this.save(): ""
+    status == "VALID" ? this.save(): null
   }
 
 }

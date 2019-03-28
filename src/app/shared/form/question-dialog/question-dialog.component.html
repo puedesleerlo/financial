@@ -1,5 +1,5 @@
 <!-- <question ></question> -->
 <div class="dialog">
-        <app-form [questions]="questions" (up)="pushArray($event)"> </app-form>
+        <app-form [item]="item" [questions]="questions" (up)="pushArray($event)"> </app-form>
         <button mat-raised-button color="primary" [disabled]="isinValid" (click)="close()">guardar</button>
 </div>

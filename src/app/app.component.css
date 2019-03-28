@@ -1,0 +1,11 @@
+.centerspinner {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+.bar {
+    position: fixed;
+    border: 3px solid white;
+}

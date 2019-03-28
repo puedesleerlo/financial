@@ -1,2 +1,14 @@
 <!-- <app-menu (selected)="goTo($event)"></app-menu> -->
+<!-- <ng-container *ngIf="loading || pending; else elseTemplate">
+
+    <div class="centerspinner">
+            <mat-spinner></mat-spinner>
+    </div>
+    
+</ng-container>
+<ng-template #elseTemplate>
+        
+</ng-template> -->
+    
+<mat-progress-bar class="bar" *ngIf="loading || pending" mode="indeterminate"></mat-progress-bar>
 <router-outlet></router-outlet>

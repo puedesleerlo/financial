@@ -2,13 +2,29 @@ import { Injectable, Injector, isDevMode } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map, catchError, finalize, tap } from 'rxjs/operators';
+
+@Injectable()
+export class HTTPStatus {
+  private requestInFlight$: BehaviorSubject<boolean>;
+  constructor() {
+    this.requestInFlight$ = new BehaviorSubject(false);
+  }
+
+  setHttpStatus(inFlight: boolean) {
+    this.requestInFlight$.next(inFlight);
+  }
+
+  getHttpStatus(): Observable<boolean> {
+    return this.requestInFlight$.asObservable();
+  }
+}
  
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
- 
-    constructor(private injector: Injector, private snackBar: MatSnackBar) { }
+
+    constructor(private injector: Injector, private snackBar: MatSnackBar, private status: HTTPStatus) { }
  
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const authService = this.injector.get(AuthService);
@@ -17,11 +33,11 @@ export class AuthInterceptorService implements HttpInterceptor {
             // tslint:disable-next-line:max-line-length
             headers: req.headers.set('Authorization', 'Bearer ' + authService.token)
         });
+        this.status.setHttpStatus(true)
  
         return next.handle(authRequest).pipe(
             tap(event => {
                 if (event instanceof HttpResponse) {
-                   
                   if(isDevMode()) console.log(" all looks good", event);
                   // http response status code
                   if(event.body.status) this.showFlow(event.body.message)
@@ -33,13 +49,17 @@ export class AuthInterceptorService implements HttpInterceptor {
                 }
               }, error => {
                  // http response status code
+                 
                  var jsonError = JSON.parse(error.error.text)
                  if(isDevMode()) console.log("show error message", jsonError);
                     // show error snackbar with red background
                     
                     this.showError(jsonError["message"])
   
-              })
+              }),
+            finalize(() => {
+              this.status.setHttpStatus(false);
+            })
             );
     }
     showError(message: string){
