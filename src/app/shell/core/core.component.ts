@@ -1,11 +1,9 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Model} from '../../models/model';
-import { Itemize } from '../../models/itemize';
 import { ExcelService } from 'src/app/utils/excel.service';
 import * as _ from "lodash"
 import { environment } from 'src/environments/environment.prod';
-import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 @Component({
   selector: 'app-core',
   templateUrl: './core.component.html',
@@ -51,7 +49,7 @@ export class CoreComponent implements OnInit {
     })
   }
   
-  selection(ev: Itemize[]) {
+  selection(ev: any[]) {
     this.router.navigate(['./' +  ev[0][this.idName]], {relativeTo: this.route});
   }
 

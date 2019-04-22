@@ -17,6 +17,11 @@ export interface FormGroup {
     company: string
 }
 
+export interface ReceivedFormGroup {
+    informacion: FormGroup,
+    forms:FormGroup
+}
+
 // export interface Model {
 //     [key: string]: Field
 //   }

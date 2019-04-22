@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  api: "http://localhost/go/",
-  base: "http://localhost/",
+  api: "https://teleforms.telemetrik.com.co/go/",
+  base: "https://teleforms.telemetrik.com.co/",
   NODE_TLS_REJECT_UNAUTHORIZED:1
 };
 

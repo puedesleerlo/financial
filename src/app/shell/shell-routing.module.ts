@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { FormNewResolver } from './form-shell/form.new.resolver';
 import { FormShellComponent } from './form-shell/form-shell.component';
 import { ResolverApi } from './core/resolverApi';
 import { AuthRolesGuard } from '../auth/auth.roles.guard';
-import { environment } from 'src/environments/environment';
 import { CoreComponent } from './core/core.component';
 import { FormResolver } from './form-shell/form.resolver';
 import { ItemResolver } from './form-shell/item.resolver';
@@ -67,7 +65,11 @@ const routes:Routes = [
     CommonModule,
     RouterModule.forChild(routes),
   ],
-  providers: [FormResolver, ResolverApi, AuthRolesGuard, ItemResolver, CanActivateViaAuthGuard],
+  providers: [FormResolver, 
+    ResolverApi, 
+    AuthRolesGuard, 
+    ItemResolver, 
+    CanActivateViaAuthGuard],
   exports: [RouterModule],
   declarations: []
 })
