@@ -15,9 +15,11 @@ export class FormResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     // let id = route.paramMap.get('item');
     let stage = route.paramMap.get('id')
-    this.ds.setURL(route.data.api + route.data.apiForm)
+    let company = route.paramMap.get('company')
+    let apiForm = route.data.apiForm
+    this.ds.setURL(route.data.api + apiForm + "/" + stage)
     let customMap = map((val:any) => {
-      let form = val.form
+      let form = val[apiForm]
       if(isDevMode()) console.log("esto es lo que se recibe", form);
       
       // if(form.forms) {
@@ -29,6 +31,6 @@ export class FormResolver implements Resolve<any> {
       // }
       return form
     })
-    return customMap(this.ds.searchData(stage))
+    return customMap(this.ds.searchData(company))
   }
 }

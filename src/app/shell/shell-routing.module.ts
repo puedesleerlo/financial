@@ -10,14 +10,14 @@ import { ItemResolver } from './form-shell/item.resolver';
 import { CanActivateViaAuthGuard } from '../auth/auth.guard';
 const routes:Routes = [
   {
-    path: 'admin/:id',
+    path: 'admin/:id/:company',
     component: CoreComponent,
     data: {
       roles: ["admin"],
       api: "admin/",
       apiForm: "form"
     },
-    canActivate: [AuthRolesGuard],
+    // canActivate: [AuthRolesGuard],
     resolve: {items: ResolverApi, group: FormResolver},
     children: [
       {
@@ -35,13 +35,13 @@ const routes:Routes = [
     ]
   },
   {
-    path: 'forms/:id',
+    path: 'forms/:company/:id',
     component: CoreComponent,
     data: {
       api: "forms/",
-      apiForm: "form"
+      apiForm: "group"
     },
-    canActivate: [CanActivateViaAuthGuard],
+    // canActivate: [CanActivateViaAuthGuard],
     resolve: {items: ResolverApi, group: FormResolver}, //Aquí se obtiene el formulario
     children: [
       {

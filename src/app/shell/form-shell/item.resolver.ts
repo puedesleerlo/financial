@@ -15,7 +15,8 @@ export class ItemResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     let id = route.paramMap.get('item');
     let stage = route.parent.paramMap.get('id')
-    this.ds.setURL(route.data.api+stage)
+    let company = route.parent.paramMap.get('company')
+    this.ds.setURL(route.data.api+stage+"/"+company)
     let customMap = map((val:any) => {
       let form = val.item
       if(isDevMode()) console.log("esto es lo que se recibe en el componente hijo", form);
