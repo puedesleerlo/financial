@@ -9,33 +9,33 @@ import { FormResolver } from './form-shell/form.resolver';
 import { ItemResolver } from './form-shell/item.resolver';
 import { CanActivateViaAuthGuard } from '../auth/auth.guard';
 const routes:Routes = [
+  // {
+  //   path: 'admin/:id/:company',
+  //   component: CoreComponent,
+  //   data: {
+  //     roles: ["admin"],
+  //     api: "admin/",
+  //     apiForm: "form"
+  //   },
+  //   // canActivate: [AuthRolesGuard],
+  //   resolve: {items: ResolverApi, group: FormResolver},
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: FormShellComponent,
+  //       data: {api: "admin/"},
+  //       // resolve: {form: FormResolver},
+  //     },
+  //     {
+  //       path: ":item",
+  //       data: {api: "admin/"},
+  //       component: FormShellComponent,
+  //       resolve: {item: ItemResolver},
+  //     }
+  //   ]
+  // },
   {
-    path: 'admin/:id/:company',
-    component: CoreComponent,
-    data: {
-      roles: ["admin"],
-      api: "admin/",
-      apiForm: "form"
-    },
-    // canActivate: [AuthRolesGuard],
-    resolve: {items: ResolverApi, group: FormResolver},
-    children: [
-      {
-        path: "",
-        component: FormShellComponent,
-        data: {api: "admin/"},
-        // resolve: {form: FormResolver},
-      },
-      {
-        path: ":item",
-        data: {api: "admin/"},
-        component: FormShellComponent,
-        resolve: {item: ItemResolver},
-      }
-    ]
-  },
-  {
-    path: 'forms/:company/:id',
+    path: 'forms/:company/:formname',
     component: CoreComponent,
     data: {
       api: "forms/",

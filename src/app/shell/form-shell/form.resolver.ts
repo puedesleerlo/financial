@@ -14,10 +14,10 @@ export class FormResolver implements Resolve<any> {
   sample$:BehaviorSubject<any> = new BehaviorSubject<any>(FormSample["forms"])
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     // let id = route.paramMap.get('item');
-    let stage = route.paramMap.get('id')
+    let formname = route.paramMap.get('formname')
     let company = route.paramMap.get('company')
     let apiForm = route.data.apiForm
-    this.ds.setURL(route.data.api + apiForm + "/" + stage)
+    this.ds.setURL(route.data.api + apiForm + "/" + company)
     let customMap = map((val:any) => {
       let form = val[apiForm]
       if(isDevMode()) console.log("esto es lo que se recibe", form);
@@ -31,6 +31,6 @@ export class FormResolver implements Resolve<any> {
       // }
       return form
     })
-    return customMap(this.ds.searchData(company))
+    return customMap(this.ds.searchData(formname))
   }
 }

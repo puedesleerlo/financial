@@ -1,7 +1,7 @@
 import { Injectable, Type } from '@angular/core';
 import { HandleError, HttpErrorHandler } from './shared/http-error-handler.service';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
@@ -97,5 +97,16 @@ export class DataService {
       .pipe(
         catchError(this.handleError('updateData', data))
       );
+  } 
+
+  lookupData(url:string): Observable<any> {
+    const urlpath = `${environment.api}lookup`;
+
+    return forms2Items(this.http.post(urlpath, 
+    encodeURIComponent("http://localhost:3200/companies?field=name,label")))
   }
 }
+var forms2Items = map((val: any) => {
+    // console.log("val",val)
+      return val.items
+    });

@@ -12,9 +12,9 @@ export class ResolverApi implements Resolve<any> {
   constructor(private ds: DataService, private router: Router) {}
  
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any[]> {
-    let id = route.paramMap.get('id');
+    let formname = route.paramMap.get('formname');
     let company = route.paramMap.get('company');
-    this.ds.addURL(route.data.api + `${id}/${company}`);
+    this.ds.addURL(route.data.api + `${company}/${formname}`);
     console.log(this.ds.getUrl());
     
     var forms2Items = map((val: any) => {

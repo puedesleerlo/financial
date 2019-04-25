@@ -93,6 +93,19 @@
         <button mat-button (click)="openDialog(question)">Llenar subformulario</button>
         
   </div>
+  <div *ngSwitchCase="'arraylookup'">
+    <h3>{{question.label}}</h3>
+    <mat-list [formArrayName] = "key">
+      <mat-list-item>
+        <!-- {{question.value |json}} -->
+        <button mat-button (click)="openLookupDialog(question)">Seleccionar items</button>
+      </mat-list-item>
+      <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
+            {{item.label}}
+      </mat-list-item>
+    </mat-list>
+  </div>
+
     <div *ngSwitchCase="'arrayGrid'">
       <mat-grid-list>
         <mat-grid-tile *ngFor="let item of question.value"></mat-grid-tile>

@@ -14,9 +14,9 @@ export class ItemResolver implements Resolve<any> {
   sample$:BehaviorSubject<any> = new BehaviorSubject<any>(FormSample["forms"])
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     let id = route.paramMap.get('item');
-    let stage = route.parent.paramMap.get('id')
+    let stage = route.parent.paramMap.get('formname')
     let company = route.parent.paramMap.get('company')
-    this.ds.setURL(route.data.api+stage+"/"+company)
+    this.ds.setURL(route.data.api+company+"/"+stage)
     let customMap = map((val:any) => {
       let form = val.item
       if(isDevMode()) console.log("esto es lo que se recibe en el componente hijo", form);

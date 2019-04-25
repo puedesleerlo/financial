@@ -1,0 +1,8 @@
+<div>
+    <app-list [items]="items" 
+      [listType]="listType" 
+      [keys]="keys"
+      [multipleselection]="true"
+      (selected)="selection($event)"></app-list>
+      <button (click)="close()" mat-raised-button>Listo</button>
+</div>

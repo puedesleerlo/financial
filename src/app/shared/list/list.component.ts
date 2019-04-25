@@ -12,11 +12,12 @@ export class ListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() items: any[]
   @Input() questions: any
   @Input() keys: any[] = []
+  @Input() multipleselection: boolean = false
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Output() selected = new EventEmitter<Object[]>();
   dataSource = new MatTableDataSource(this.items);
-  selection = new SelectionModel<any>(false, []);
+  selection = new SelectionModel<any>(this.multipleselection, []);
   
   constructor() { }
 
@@ -37,6 +38,7 @@ export class ListComponent implements OnInit, OnChanges, AfterViewInit {
     this.dataSource = new MatTableDataSource(this.items);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.selection = new SelectionModel<any>(this.multipleselection, []);
   }
 
   clicked() {

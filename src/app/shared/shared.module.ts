@@ -7,6 +7,7 @@ import { QuestionComponent } from './form/question/question.component';
 import { KeysPipe } from './keys.pipe';
 import { QuestionDialog } from './form/question-dialog/question-dialog.component';
 import { ListComponent } from './list/list.component';
+import { LookupDialog } from './form/lookup-dialog/lookup-dialog.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { ListComponent } from './list/list.component';
 
   ],
   providers: [],
-  declarations: [FormComponent, QuestionComponent, QuestionDialog, KeysPipe, ListComponent, ],
-  entryComponents: [QuestionDialog]
+  declarations: [FormComponent, QuestionComponent, QuestionDialog, LookupDialog, KeysPipe, ListComponent, ],
+  entryComponents: [QuestionDialog, LookupDialog]
 })
 export class SharedModule { }

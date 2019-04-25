@@ -1,10 +1,11 @@
 import { Component,  Input, OnChanges, isDevMode } from '@angular/core';
-import { FormGroup, FormArray, FormControl} from '@angular/forms';
+import { FormGroup, FormArray, FormControl, FormBuilder} from '@angular/forms';
 import { Field, Option } from '../../../models/model';
 import { MatDialog} from '@angular/material';
 import { QuestionDialog } from '../question-dialog/question-dialog.component';
 import {FormGroup as FormModel} from "../../../models/form.model"
 import { Conditional } from '../../logic.analizer';
+import { LookupDialog } from '../lookup-dialog/lookup-dialog.component';
 
 export interface Question {
   key: string,
@@ -29,9 +30,8 @@ export class QuestionComponent implements OnChanges {
   @Input() question: Field;
   @Input() form: FormGroup;
   inputControl = new FormControl('')
-
   imageSrc: string | ArrayBuffer;
-  constructor(public dialog: MatDialog) { 
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder) { 
   }
 
   get key() {
@@ -121,6 +121,22 @@ export class QuestionComponent implements OnChanges {
       if(result) {
         // console.log(control)
         question.subform = result
+      }
+      
+    });
+  }
+  openLookupDialog(question: Field, item:any = {}): void {
+    // let control = <FormArray>this.getArrayControl(question.key);
+    let dialogRef = this.dialog.open(LookupDialog, {
+      width: '450px',
+      height: '300px',
+      data: {lookup: question.lookup} //Le entrega un formulario
+    });
+
+    dialogRef.afterClosed().subscribe((result:any[]) => {
+      if(isDevMode()) console.log('The dialog was closed', result);
+      if(result) {
+        this.form.setControl(question.key, this.formBuilder.array(result))
       }
       
     });

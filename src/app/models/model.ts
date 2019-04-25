@@ -12,6 +12,7 @@ export class Field {
     controltype: string
     type?: string
     options?: Option[]
+    lookup?:string
     arrayschema?: Field[]
 
     constructor(...object) {
