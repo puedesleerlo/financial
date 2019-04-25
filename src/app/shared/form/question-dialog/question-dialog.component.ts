@@ -20,7 +20,7 @@ export class QuestionDialog implements OnInit {
     // this.data.questions.map(val => this.arrayMapping(val));
     this.questions =  this.data.questions//Es un array
     if(!_.isEmpty(this.data.item)) this.item = this.data.item
-    console.log(this.questions)
+    console.log("Este es el valor de las preguntas", this.item)
   }
   arrayMapping(item) {
     Object.assign(item, item.custom)

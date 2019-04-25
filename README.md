@@ -27,7 +27,6 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 #Características de la aplicación
-- Debe haber un login de usuarios
 - Deben haber roles
 - Deben haber compañías
 - Un usuario sólo puede ver los formularios de su compañía
@@ -48,24 +47,20 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 #ToDo
 
-Falta la vista detalle desde la api de cada formulario y los controles de creación y actualización
-Quitar validación en formularios condicionales
-Deshabilitar formularios dependiendo de la condición (eso incluye quitar la validación)
+Hay que empezar a pensar en el concepto de views. 
+- se puede filtrar la información de una tabla o una gráfica fácilmente.
+- Se puede comparar información de distintas tablas (?)
+- Se puede segmentar, etc
+- Se pueden asignar controles hechos por el usuario para controlar los filtros
+- Se pueden hacer botones con acciones
+
 Crear administración de usuarios
-
-Formularios condicionales
- - El campo debe desaparecer si la condición no se cumple
-    - se ejecuta un loop cada vez que el formulario cambia
-    - Se evalúa la condición y se buscan los campos de los que depende la condición. 
-    Si los campos cambian, se recompila la condición
- - El campo se debe deshabilitar si la condición no se cumple
- - Validación con una condición lógica
-
+- Asegurar la administración!!!!!
  Formularios de varias hojas
   - Condiciones entre formularios de varias hojas ???
 
 - Hay problemas con los formularios condicionales de los formularios condicionales
-- Cómo se deshabilita un formArray? D:D:D:D:D:
+- Cómo se deshabilita un formArray? D:D:D:D:D: (Desaparece)
 - Poner clase en las opciones cuando está deshabilitado
 
 - Limitar las opciones y la clase de un campo según reglas predefinidas. Por ejemplo: 
@@ -74,7 +69,7 @@ Si controltype es arraymodal, arrayautocomplete o arrayinput es necesario que ty
 
 Si controltype es input, type puede ser string, number, range, etc.
 
-option exist!! un campo para option que contiene su condición de existencia! Es decir, además de key value, existe una opción que es exist
+
 
 #Cosas para testear
 
@@ -90,7 +85,14 @@ option exist!! un campo para option que contiene su condición de existencia! Es
 
 Falta por hacer:
 - Control de usuarios
-- Control de compañías
 - Terminar de poner la configuración de las preguntas
 - Hacer lo de las versiones (cambiar unique name como clave única, pero seguir buscando por unique name,
 traer un arreglo con todas las versiones disponibles, pero traer automáticamente la última version )
+
+# Ideas para las views
+
+- Puede ser un json que se renderiza. La misma aproximación que en los formularios (tendría la ventaja que Vega también es un Json)
+- Las gráficas se hacen con Vega
+- Debe ser posible imprimir la hoja o automatizar el proceso
+- Debe de haber un lenguaje (como el de Coda) para añadir controles y referencias internas
+- Usar Observablehq!!!!! (la saqué del estadio)
