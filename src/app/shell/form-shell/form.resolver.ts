@@ -16,10 +16,9 @@ export class FormResolver implements Resolve<any> {
     // let id = route.paramMap.get('item');
     let formname = route.paramMap.get('formname')
     let company = route.paramMap.get('company')
-    let apiForm = route.data.apiForm
-    this.ds.setURL(route.data.api + apiForm + "/" + company)
+    this.ds.setURL(route.data.api + "group" + "/" + company)
     let customMap = map((val:any) => {
-      let form = val[apiForm]
+      let form = val.group
       if(isDevMode()) console.log("esto es lo que se recibe", form);
       
       // if(form.forms) {

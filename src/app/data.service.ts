@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { ActivatedRouteSnapshot } from '@angular/router';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,7 +21,10 @@ export class DataService {
   private handleError: HandleError;
   private id = "id"
   constructor(
-    private http: HttpClient, public httpErrorHandler: HttpErrorHandler) {
+    private http: HttpClient, 
+    public httpErrorHandler: HttpErrorHandler,
+    
+    ) {
     this.handleError = this.httpErrorHandler.createHandleError('DataService');
   }
 
@@ -99,11 +104,11 @@ export class DataService {
       );
   } 
 
-  lookupData(url:string): Observable<any> {
+  lookupData(url:string, company:string): Observable<any> {
     const urlpath = `${environment.api}lookup`;
-
+    
     return forms2Items(this.http.post(urlpath, 
-    encodeURIComponent("http://localhost:3200/companies?field=name,label")))
+    encodeURIComponent(url+"?company="+company)))
   }
 }
 var forms2Items = map((val: any) => {

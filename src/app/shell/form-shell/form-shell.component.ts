@@ -39,13 +39,13 @@ export class FormShellComponent implements OnInit {
       
       
       if(data.api) {
-        var id = this.route.snapshot.parent.paramMap.get("id")
+        var id = this.route.snapshot.parent.paramMap.get("formname")
         var company = this.route.snapshot.parent.paramMap.get("company")
-        this.ds.setURL(data.api + id + "/" + company)
+        this.ds.setURL(data.api + company + "/" + id)
       }
       this.route.url.subscribe((value: UrlSegment[]) => {
         if(value[0] && data.api) {
-          this.ds.setURL(data.api+ id + "/" + company +"/"+ value[0].path)
+          this.ds.setURL(data.api+ company +"/"+ id + "/" + value[0].path)
         }
       });
       

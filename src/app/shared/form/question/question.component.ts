@@ -6,6 +6,7 @@ import { QuestionDialog } from '../question-dialog/question-dialog.component';
 import {FormGroup as FormModel} from "../../../models/form.model"
 import { Conditional } from '../../logic.analizer';
 import { LookupDialog } from '../lookup-dialog/lookup-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 export interface Question {
   key: string,
@@ -31,7 +32,7 @@ export class QuestionComponent implements OnChanges {
   @Input() form: FormGroup;
   inputControl = new FormControl('')
   imageSrc: string | ArrayBuffer;
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder) { 
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, public route:ActivatedRoute,) { 
   }
 
   get key() {
@@ -126,11 +127,13 @@ export class QuestionComponent implements OnChanges {
     });
   }
   openLookupDialog(question: Field, item:any = {}): void {
+    const company =this.route.snapshot.paramMap.get("company")
+    console.log("la ruta en lookup es", company)
     // let control = <FormArray>this.getArrayControl(question.key);
     let dialogRef = this.dialog.open(LookupDialog, {
       width: '450px',
       height: '300px',
-      data: {lookup: question.lookup} //Le entrega un formulario
+      data: {lookup: question.lookup, company: company} //Le entrega un formulario
     });
 
     dialogRef.afterClosed().subscribe((result:any[]) => {
