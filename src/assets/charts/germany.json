@@ -1,0 +1,44 @@
+{
+"$schema": "https://vega.github.io/schema/vega/v3.0.json",
+"width": 900,
+"height": 560,
+"padding": {"top": 0, "left": 0, "right": 0, "bottom": 0},
+"signals": [],
+"data": [
+{
+"name": "DEU_adm2",
+"url": "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/germany/germany-regions.json",
+"format": {"type": "topojson", "feature": "DEU_adm2"},
+"transform": [
+{
+"type": "geopath",
+"projection": "projection"
+}
+]
+}
+],
+"scales": [],
+"projections": [
+{
+"name": "projection",
+"type": "mercator",
+"scale": 1200,
+"translate": [{"signal": "width / 2"}, {"signal": "height / 2"}]
+}
+],
+"marks": [
+{
+"type": "path",
+"from": {"data": "DEU_adm2"},
+"encode": {
+"enter": {
+"fill": {"value": "#dedede"},
+"stroke": {"value": "white"}
+},
+"update": {
+"path": {"field": "path"}
+}
+}
+}
+]
+}

@@ -3,21 +3,21 @@
     
     <mat-form-field *ngSwitchCase="'input'">
         <input matInput [formControlName]="key"
-        [id]="key" [type]="question.type" [value]="question.value" [placeholder]="question.label">
+        [id]="key" [type]="question.datatype" [value]="question.value" [placeholder]="question.label">
     </mat-form-field>
 
     <mat-form-field *ngSwitchCase="'textarea'">
       <textarea matInput [formControlName]="key"
-      [id]="key" [type]="question.type" [value]="question.value" [placeholder]="question.label"></textarea>
+      [id]="key" [type]="question.datatype" [value]="question.value" [placeholder]="question.label"></textarea>
   </mat-form-field>
 
     <div class="image-upload" *ngSwitchCase="'image'">
-    <input [id]="key" [formControlName]="key"  [type]="question.type" (change)="readURL($event);" />
+    <input [id]="key" [formControlName]="key"  [type]="question.datatype" (change)="readURL($event);" />
     <img id="blah" [src]="imageSrc || 'http://placehold.it/180'" width="100%" alt="your image" />
     </div>
     <mat-form-field *ngSwitchCase="'disabled'">
         <input matInput [formControlName]="key"
-        [id]="key" [type]="question.type" [value]="question.value" [placeholder]="question.label">
+        [id]="key" [type]="question.datatype" [value]="question.value" [placeholder]="question.label">
     </mat-form-field>
     <div *ngSwitchCase="'hidden'">
         <input [formControlName]="key"
@@ -32,7 +32,7 @@
     
     <mat-form-field  *ngSwitchCase="'dropdown'" [id]="key"  >
       <mat-select [formControlName]="key" [placeholder]="question.label">
-          <mat-option *ngFor="let opt of question.options" [disabled]="opt.optdisabled"  [value]="opt.key">{{opt.label}}</mat-option>
+          <mat-option *ngFor="let opt of question.options" [disabled]="opt.optdisabled"  [value]="opt.name">{{opt.label}}</mat-option>
       </mat-select>
     </mat-form-field>
     <div *ngSwitchCase="'arrayautocomplete'" class="arrayautocomplete">

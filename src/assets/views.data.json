@@ -1,0 +1,54 @@
+{
+    "name":"view1",
+    "company":"administracion",
+    "datasources": ["datasource1", "datasource2"],
+    "filters": [
+        {
+            "name":"filtro1",
+            "datasource":"datasource1",
+            "filtertype":"pure",
+            "definition": "",
+            "outputDatasourcename":"filteredDatasource1"
+        }, {
+            "name":"filtro2",
+            "datasource":"datasource2",
+            "filtertype":"crossed",
+            "dependencies":["filteredDatasource1"],
+            "definition":""
+        }
+    ],
+    "uniquename": "administracion-view1",
+    "filter":"función de javascript ? o dinámico",
+    "sort":"función de javascript ? o dinámico",
+    "order":["modulo1", "modulo2"],
+    "modules": [
+        {
+            "name":"mdtitle",
+            "uniquename":"administracion-mdtitle",
+            "category": "text",
+            "moduletype": "md",
+            "content":"`dfsefsaefasefae`"
+        },
+        {
+            "name":"modulo1",
+            "uniquename":"administracion-modulo1",
+            "category": "tabular",
+            "moduletype": "table",
+            "source":"datasource1",
+            "displayColumns":["keys"],
+            "customColumns":[
+                {
+                    "name":"column0",
+                    "formula":"(x) => {x.column0 = x.keys; return x}",
+                    "type":"number"
+                }
+            ]
+        },
+        {
+            "name":"modulo2",
+            "uniquename":"administracion-modulo2",
+            "category": "vega",
+            "moduletype": "bars"
+        }
+    ]
+}

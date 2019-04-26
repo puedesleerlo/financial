@@ -36,7 +36,7 @@ export class QuestionComponent implements OnChanges {
   }
 
   get key() {
-    return this.question.key
+    return this.question.name
   }
   readURL(event: Evento): void {
     if(isDevMode()) console.log(event.target)
@@ -74,7 +74,7 @@ export class QuestionComponent implements OnChanges {
     this.inputControl.setValue('')
   }
   openArrayDialog(question: Field): void {
-    let control = <FormArray>this.getArrayControl(question.key);//Le entrega un form array
+    let control = <FormArray>this.getArrayControl(question.name);//Le entrega un form array
     if(isDevMode()) console.log("schema", question.arrayschema) //es un array
     let dialogRef = this.dialog.open(QuestionDialog, {
       width: '450px',
@@ -92,7 +92,7 @@ export class QuestionComponent implements OnChanges {
     });
   }
   openArrayItemDialog(question: Field, index:number): void {
-    let control = <FormArray>this.getArrayControl(question.key);//Le entrega un form array
+    let control = <FormArray>this.getArrayControl(question.name);//Le entrega un form array
     if(isDevMode()) console.log("schema", question.arrayschema) //es un array
     let dialogRef = this.dialog.open(QuestionDialog, {
       width: '450px',
@@ -139,7 +139,7 @@ export class QuestionComponent implements OnChanges {
     dialogRef.afterClosed().subscribe((result:any[]) => {
       if(isDevMode()) console.log('The dialog was closed', result);
       if(result) {
-        this.form.setControl(question.key, this.formBuilder.array(result))
+        this.form.setControl(question.name, this.formBuilder.array(result))
       }
       
     });

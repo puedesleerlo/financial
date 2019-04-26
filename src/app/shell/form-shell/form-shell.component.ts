@@ -21,9 +21,9 @@ export class FormShellComponent implements OnInit {
   constructor(private route: ActivatedRoute, private ds: DataService, private cdRef:ChangeDetectorRef) { }
   //Este módulo es el que se conecta con la base de datos y recibe el formulario
   ngOnInit() {
-    this.route.data.subscribe((data:{form?: any, item?: string, api: string}) => {
+    this.route.data.subscribe((data:{group?: any, item?: string, api: string}) => {
 
-      if(isDevMode()) console.log("Formulario obtenido en form shell", data.form)
+      if(isDevMode()) console.log("Formulario obtenido en form shell", data.group)
       this.route.parent.data.subscribe(data => {
         this.name = data.group.label
         this.forms = data.group.forms

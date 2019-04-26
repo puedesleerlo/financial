@@ -39,17 +39,18 @@ export class FormComponent extends Form implements OnInit, OnChanges {
     this.form.updateValueAndValidity()
     this.save()
   }
-  patchValue(questions, item) {
+  patchValue(questions: Field[], item) {
     if(isDevMode()) console.log("El item está vacío", item, this.form)
     
     if(!_.isEmpty(item)) { //muta el objeto
       var localquestions = []
       questions.forEach(question => {
         var questionwithvalues = question
-        if(isDevMode()) console.log("las preguntas son estas", question)
-        questionwithvalues.value = item[question.key]
+        
+        questionwithvalues.value = item[question.name]
         localquestions.push(questionwithvalues)
       })
+      if(isDevMode()) console.log("las preguntas con valores son estas", localquestions)
       return localquestions
     }
     else return this.questions

@@ -7,7 +7,7 @@ export class Field {
     exist?: string
     disable?:string
     active?: boolean
-    key: string
+    name: string
     label: string
     controltype: string
     type?: string

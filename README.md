@@ -96,3 +96,4 @@ traer un arreglo con todas las versiones disponibles, pero traer automáticament
 - Debe ser posible imprimir la hoja o automatizar el proceso
 - Debe de haber un lenguaje (como el de Coda) para añadir controles y referencias internas
 - Usar Observablehq!!!!! (la saqué del estadio)
+- Mezclar Observable con los forms de Angular

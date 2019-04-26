@@ -1,0 +1,6 @@
+<div *ngFor="let chart of charts" class="chart-container">
+  <app-dynvega id="{{chart.name}}" 
+    [pathToData]="chart.path"
+    (outgoingData)="handleMainChart($event)">
+  </app-dynvega>
+  </div>

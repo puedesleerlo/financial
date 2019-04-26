@@ -16,6 +16,7 @@ import { FormShellComponent } from './shell/form-shell/form-shell.component';
 import { LoginModule } from './login/login.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptorService, HTTPStatus } from './auth/auth.interceptor';
+import { ViewsModule } from './views/views.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { AuthInterceptorService, HTTPStatus } from './auth/auth.interceptor';
     BrowserModule,
     SharedModule,
     ShellModule,
+    ViewsModule,
     LoginModule,
     HttpClientModule,
     RouterModule.forRoot([

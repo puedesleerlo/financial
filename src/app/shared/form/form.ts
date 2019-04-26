@@ -95,15 +95,15 @@ export abstract class Form {
                     formcontrol = this.formBuilder.control(field.value, validators)
                     break;
             }
-            controls[field.key] = formcontrol
+            controls[field.name] = formcontrol
         })
         return controls
     }
     getValidators(validators: Option[]):ValidatorFn[] {
         let accum = []
         validators.forEach(validator =>{
-            var text = ValidationText[validator.key] 
-            var custom = CustomValidators[validator.key]
+            var text = ValidationText[validator.name] 
+            var custom = CustomValidators[validator.name]
             accum.push(custom())
         })
         return accum
