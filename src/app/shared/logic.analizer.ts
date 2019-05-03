@@ -49,7 +49,7 @@ export class Conditional {
               return e.eval()
             },
             PriExp_vari: function(e) {
-              // console.log(e.sourceString)
+              console.log(e.sourceString)
               var control = self.form.get(e.sourceString)
               if(control) return control.value
               else Util.TE("No se encontró el nombre del campo")
@@ -125,7 +125,7 @@ export class Conditional {
     activateSubs() {
         this.runfuntion(this.match())
         var m =this.grammar.match(this.question[this.purpose])
-        // console.log(m.message)
+        console.log(m.message)
         if (m.succeeded()) {
           this.semantics(m).subscribers()
           // pass = 
@@ -134,7 +134,7 @@ export class Conditional {
     }
     match() {
         var m =this.grammar.match(this.question[this.purpose])
-        // console.log(m.message)
+        console.log(this.question)
         if (m.succeeded()) {
             
           return this.semantics(m).eval()

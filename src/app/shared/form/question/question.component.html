@@ -3,32 +3,32 @@
     
     <mat-form-field *ngSwitchCase="'input'">
         <input matInput [formControlName]="key"
-        [id]="key" [type]="question.datatype" [value]="question.value" [placeholder]="question.label">
+        [id]="key" [type]="question.datatype" [placeholder]="question.label">
     </mat-form-field>
 
     <mat-form-field *ngSwitchCase="'textarea'">
       <textarea matInput [formControlName]="key"
-      [id]="key" [type]="question.datatype" [value]="question.value" [placeholder]="question.label"></textarea>
+      [id]="key" [type]="question.datatype" [placeholder]="question.label"></textarea>
   </mat-form-field>
 
     <div class="image-upload" *ngSwitchCase="'image'">
     <input [id]="key" [formControlName]="key"  [type]="question.datatype" (change)="readURL($event);" />
     <img id="blah" [src]="imageSrc || 'http://placehold.it/180'" width="100%" alt="your image" />
     </div>
-    <mat-form-field *ngSwitchCase="'disabled'">
+    <!-- <mat-form-field *ngSwitchCase="'disabled'">
         <input matInput [formControlName]="key"
         [id]="key" [type]="question.datatype" [value]="question.value" [placeholder]="question.label">
-    </mat-form-field>
+    </mat-form-field> -->
     <div *ngSwitchCase="'hidden'">
         <input [formControlName]="key"
-        [id]="key" [type]="question.controltype" [value]="question.value">
+        [id]="key" type="hidden">
     </div>
 
-    <mat-form-field  *ngSwitchCase="'simplearraydependency'" [id]="key"  >
+    <!-- <mat-form-field  *ngSwitchCase="'simplearraydependency'" [id]="key"  >
       <mat-select [formControlName]="key" [placeholder]="question.label">
           <mat-option *ngFor="let opt of getArrayValue(question.dependency)"  [value]="opt.name">{{opt.label}}</mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
     
     <mat-form-field  *ngSwitchCase="'dropdown'" [id]="key"  >
       <mat-select [formControlName]="key" [placeholder]="question.label">
@@ -59,7 +59,7 @@
           </mat-list>
                 
     </div>
-    <div *ngSwitchCase="'arrayinput'">
+    <!-- <div *ngSwitchCase="'arrayinput'">
         <h3>{{question.label}}</h3>
         <mat-list [formArrayName] = "key">
             <mat-list-item>
@@ -73,7 +73,7 @@
               <button mat-button (click)="deleteArrayItem(i, key)">Delete</button>
             </mat-list-item>
           </mat-list> 
-    </div>
+    </div> -->
     <div *ngSwitchCase="'arraymodal'">
         <h3>{{question.label}}</h3>
         <mat-list [formArrayName] = "key">
@@ -90,9 +90,8 @@
     </div>
     <div *ngSwitchCase="'formmodal'">
         <h3>{{question.label}}</h3>
-        <button mat-button (click)="openDialog(question)">Llenar subformulario</button>
-        
-  </div>
+        <button mat-button (click)="openDialog(question)">Llenar subformulario</button>    
+    </div>
   <div *ngSwitchCase="'arraylookup'">
     <h3>{{question.label}}</h3>
     <mat-list [formArrayName] = "key">
@@ -101,16 +100,44 @@
         <button mat-button (click)="openLookupDialog(question)">Seleccionar items</button>
       </mat-list-item>
       <mat-list-item *ngFor="let item of getArrayValue(key); let i = index">
-            {{item.label}}
+            {{item.name}}
       </mat-list-item>
     </mat-list>
   </div>
-
-    <div *ngSwitchCase="'arrayGrid'">
+  <div *ngSwitchCase="'autocompleteLookup'">
+    <mat-form-field>
+      <input [disabled]="isArrayDisabled(key)" [formControl]="inputControl" type="text" #autocomplete matInput [matAutocomplete]="auto">
+    </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of question.options"  [value]="option.name">{{option.label}}</mat-option>
+    </mat-autocomplete>
+  </div>
+<!-- 
+    <div *ngSwitchCase="'arraygrid'">
       <mat-grid-list>
         <mat-grid-tile *ngFor="let item of question.value"></mat-grid-tile>
       </mat-grid-list>
-  </div>
- 
+    </div> -->
+    <div *ngSwitchCase="'checkbox'">
+      <mat-checkbox [formControlName]="key">Check me!</mat-checkbox>
+    </div>
+    <div *ngSwitchCase="'radiobutton'">
+      <mat-radio-group [formControlName]="key" aria-label="Select an option">
+        <mat-radio-button *ngFor="let option of question.options" [value]="option.name">{{option.label}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div *ngSwitchCase="'datepicker'">
+      <mat-form-field>
+        <input matInput [formControlName]="key" [matDatepicker]="picker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div *ngSwitchCase="'slider'">
+      <mat-slider [formControlName]="key" thumbLabel tickInterval="1"></mat-slider>
+    </div>
+    <div *ngSwitchCase="'chipsinput'">
+      <chips-autocomplete></chips-autocomplete>
+    </div>
   </div> 
 </div>

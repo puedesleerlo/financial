@@ -19,7 +19,14 @@ import { MatPaginatorModule,
   MatButtonModule, 
   MatSnackBarModule, 
   MatProgressSpinnerModule, 
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatDatepickerModule,
+  MatRadioModule,
+  MatChipsModule,
+  MatSliderModule,
+  MatNativeDateModule,
+  MatTreeModule,
+  MatMenuModule
 } from '@angular/material';
 
 
@@ -47,7 +54,14 @@ import { MatPaginatorModule,
     MatButtonModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    MatChipsModule,
+    MatSliderModule,
+    MatMenuModule
+    
 ],
   declarations: []
 })

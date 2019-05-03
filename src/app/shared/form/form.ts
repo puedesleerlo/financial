@@ -36,7 +36,7 @@ export abstract class Form {
 
     conditionalSubs() {
         this.questions.forEach(field => {
-            if(isDevMode()) console.log("Empieza a buscar por condiciones", field);
+            // if(isDevMode()) console.log("Empieza a buscar por condiciones", field);
             
             if (field.exist) {
                 if(isDevMode()) console.log("Tiene la condición no exist");
@@ -72,21 +72,30 @@ export abstract class Form {
             // console.log("field", field);
             let validators = this.getValidators(field.validation || []) //Busca los validadores
             let formcontrol:AbstractControl;
-            switch (field.type) {
+            switch (field.datatype) {
                 case "array":
-                    if(isDevMode()) console.log("entra acá", field.value);
-                    formcontrol = this.buildArray((field.value || []), field.arrayschema, validators)
+                    var value = field.value || []
+                    if(isDevMode()) console.log("entra acá", value);
+                    formcontrol = this.buildArray((value), field.arrayschema, validators)
                     break;
                 case "simplearray":
-                    if(isDevMode()) console.log("simple array", field.value);
-                    formcontrol = this.buildSimpleArray((field.value || []), validators)
+                    var value = field.value || []
+                    if(isDevMode()) console.log("simple array", value);
+                    formcontrol = this.buildSimpleArray((value), validators)
                     break;
                 case "number":
-                    formcontrol = this.formBuilder.control(field.value, validators)
+                    var value = field.value || 0
+                    formcontrol = this.formBuilder.control(value, validators)
                     if(isDevMode()) console.log("type number", formcontrol)
                     break;
                 case "string":
-                    formcontrol = this.formBuilder.control(field.value, validators)
+                    var value = field.value || ""
+                    if(isDevMode()) console.log("simple string", value);
+                    formcontrol = this.formBuilder.control(value, validators)
+                    break;
+                case "date":
+                    var value = field.value || Date.now()
+                    formcontrol = this.formBuilder.control(value, validators)
                     break;
                 // case "subform":
                 //     formcontrol = this.formBuilder.group(field.value, validators)
@@ -124,16 +133,18 @@ export abstract class Form {
         var arrays=[]
         array.forEach(dato => {
             var prosArray = []
-            schema.forEach(question => {
-                var toquestion:any = {}
-                if(isDevMode()) console.log("mostrar question", question)
-                if(isDevMode()) console.log("mostrar dato", dato)
-                Object.assign(toquestion, question)
-                toquestion.value = dato[question.key]
-                if(isDevMode()) console.log("toquestion", toquestion); //Pregunta con el valor del formulario
-                prosArray.push(toquestion) //Hace un arreglo de las preguntas
-            })
-            var groupForm = this.buildGroup(prosArray) //Convierte el arreglo de preguntas en un formulario
+            // schema.forEach(question => {
+            //     var toquestion:any = {}
+            //     if(isDevMode()) console.log("mostrar question", question)
+            //     if(isDevMode()) console.log("mostrar dato", dato)
+            //     Object.assign(toquestion, question)
+            //     toquestion.value = dato[question.key]
+            //     if(isDevMode()) console.log("toquestion", toquestion); //Pregunta con el valor del formulario
+            //     prosArray.push(toquestion) //Hace un arreglo de las preguntas
+            // })
+
+            // var groupForm = this.buildGroup(prosArray) //Convierte el arreglo de preguntas en un formulario
+            var groupForm = this.formBuilder.control(dato)
             arrays.push(groupForm); //Hace un array de formularios
             
         })

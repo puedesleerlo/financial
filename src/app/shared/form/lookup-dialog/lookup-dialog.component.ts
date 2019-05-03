@@ -4,6 +4,8 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/data.service';
 import { ActivatedRoute } from '@angular/router';
+import { LookupService } from 'src/app/lookup.service';
+import { lookup } from 'dns';
 
 @Component({
   selector: 'app-lookup-dialog',
@@ -20,16 +22,18 @@ export class LookupDialog implements OnInit {
     private http:HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: {lookup:string, company:string},
     public route:ActivatedRoute,
-    private ds: DataService) {}
+    // private ds: DataService
+    private lps:LookupService
+    ) {}
 
   ngOnInit() {
 
-    this.ds.lookupData(this.data.lookup, this.data.company).subscribe(items => {      console.log(items)
+    this.lps.getLuItems(this.data.lookup).subscribe(items => {      console.log(items)
       this.keys = [
         {key: "name", label: "Nombre", type: "string"},
         {key: "label", label: "Etiqueta", type: "string"}
       ]
-      this.items=items
+      this.items=items.items
       
     })
   }

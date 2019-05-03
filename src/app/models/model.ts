@@ -10,7 +10,7 @@ export class Field {
     name: string
     label: string
     controltype: string
-    type?: string
+    datatype?: string
     options?: Option[]
     lookup?:string
     arrayschema?: Field[]

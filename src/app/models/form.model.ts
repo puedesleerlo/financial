@@ -2,7 +2,7 @@ import { componentFactoryName } from "@angular/compiler";
 import { Model, Field } from "./model";
 
 export interface FormModel {
-    key: string
+    name: string
     label: string
     idname?: string
     company?: string
@@ -11,7 +11,7 @@ export interface FormModel {
 }
 
 export interface FormGroup {
-    key: string
+    name: string
     label: string
     forms: FormModel[]
     company: string

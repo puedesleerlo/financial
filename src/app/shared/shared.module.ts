@@ -8,6 +8,7 @@ import { KeysPipe } from './keys.pipe';
 import { QuestionDialog } from './form/question-dialog/question-dialog.component';
 import { ListComponent } from './list/list.component';
 import { LookupDialog } from './form/lookup-dialog/lookup-dialog.component';
+import { ChipsautocompleteComponent } from './form/partials/chipsautocomplete/chipsautocomplete.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { LookupDialog } from './form/lookup-dialog/lookup-dialog.component';
 
   ],
   providers: [],
-  declarations: [FormComponent, QuestionComponent, QuestionDialog, LookupDialog, KeysPipe, ListComponent, ],
+  declarations: [FormComponent, QuestionComponent, QuestionDialog, LookupDialog, KeysPipe, ListComponent, ChipsautocompleteComponent, ],
   entryComponents: [QuestionDialog, LookupDialog]
 })
 export class SharedModule { }

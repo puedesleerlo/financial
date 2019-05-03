@@ -1,7 +1,5 @@
-<p>
-  menu works!
-</p>
-<mat-list>
+
+<!-- <mat-list>
   <mat-list-item *ngFor="let feature of features">
       <mat-checkbox (click)="$event.stopPropagation()"
                             (change)="$event ? selection.toggle(feature) : null; clicked()"
@@ -9,4 +7,25 @@
                             {{feature.label}}
       </mat-checkbox>
   </mat-list-item>
-</mat-list>
+</mat-list> -->
+
+<mat-nav-list>
+  <div *ngFor="let link of links">
+    <h3 mat-subheader >
+      <ng-container *ngIf="isAdmin(); else elseTemplate">
+        <button mat-button [matMenuTriggerFor]="menu">{{ link.label }}</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="goTo(link, 'newform')">New Form</button>
+          <button mat-menu-item>New Group</button>
+        </mat-menu>  
+      </ng-container>
+      <ng-template #elseTemplate>
+          {{link.label}}
+      </ng-template>
+              
+    </h3>
+    <a mat-list-item (click)="goTo(link, form.name)"
+    *ngFor="let form of link.groups" routerLinkActive="active">{{form.label}}</a>
+    <mat-divider></mat-divider>
+  </div>
+</mat-nav-list>

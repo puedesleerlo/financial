@@ -40,7 +40,7 @@ export class FormComponent extends Form implements OnInit, OnChanges {
     this.save()
   }
   patchValue(questions: Field[], item) {
-    if(isDevMode()) console.log("El item está vacío", item, this.form)
+    if(isDevMode()) console.log("El item está vacío", item)
     
     if(!_.isEmpty(item)) { //muta el objeto
       var localquestions = []
