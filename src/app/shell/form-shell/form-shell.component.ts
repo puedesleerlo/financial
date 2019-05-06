@@ -24,30 +24,31 @@ export class FormShellComponent implements OnInit {
     this.route.data.subscribe((data:{group?: any, item?: string, api: string}) => {
 
       if(isDevMode()) console.log("Formulario obtenido en form shell", data.group)
+
       this.route.parent.data.subscribe(data => {
         this.name = data.group.label
         this.forms = data.group.forms
       })
-      
-      this.route.data.subscribe(data => {
-        if(isDevMode()) console.log("el item cambia", data.item)
-        if(data.item) {
-          this.item = data.item
-        }
-        else this.item = {}
-      })
-      
-      
-      if(data.api) {
-        var id = this.route.snapshot.parent.paramMap.get("formname")
-        var company = this.route.snapshot.parent.paramMap.get("company")
-        this.ds.setURL(data.api + company + "/" + id)
+
+      if(isDevMode()) console.log("el item cambia", data.item)
+      if(data.item) {
+        this.item = data.item
       }
-      this.route.url.subscribe((value: UrlSegment[]) => {
-        if(value[0] && data.api) {
-          this.ds.setURL(data.api+ company +"/"+ id + "/" + value[0].path)
-        }
-      });
+      else this.item = {}
+
+      
+      
+      // if(data.api) {
+      //   
+      //   var company = this.route.snapshot.parent.paramMap.get("company")
+      //   console.log("compañía en form-shell", company)
+      //   this.ds.setURL(data.api + company + "/" + id)
+      // }
+      // this.route.url.subscribe((value: UrlSegment[]) => {
+      //   if(value[0] && data.api) {
+      //     this.ds.setURL(data.api+ company +"/"+ id + "/" + value[0].path)
+      //   }
+      // });
       
       
       
@@ -64,9 +65,9 @@ export class FormShellComponent implements OnInit {
     //absoluteform
     //obtener todas las preguntas
     // var questions = this.forms.map(form => form.questions) //Se obtiene un array de arrays con todas las preguntas
-    
+    var formname = this.route.snapshot.parent.paramMap.get("formname")
     var absoluteform = this.prepareData(this.outputValue, this.forms)
-    this.ds.addData(absoluteform).subscribe(resp => {
+    this.ds.addData(formname, absoluteform).subscribe(resp => {
       if(resp["status"] == true) this.refresh()
     })
   }
@@ -84,9 +85,9 @@ export class FormShellComponent implements OnInit {
     this.ds.deleteData().subscribe(data => console.log(data));
     
   }
-  isCompleted(key): boolean{
-    if(this.outputValue[key]) {
-      return this.outputValue[key].valid 
+  isCompleted(name): boolean{
+    if(this.outputValue[name]) {
+      return this.outputValue[name].valid 
     }
     return false
   }
@@ -99,17 +100,17 @@ export class FormShellComponent implements OnInit {
 
     var absoluteform = {}
     var self = this
-    Object.keys(outputValue).map(function(key, index) {
-      Object.assign(absoluteform, outputValue[key].value)
+    Object.keys(outputValue).map(function(name, index) {
+      Object.assign(absoluteform, outputValue[name].value)
     });
 
     const questions = _.flatMap(forms, (form) => form.questions)
 
     console.log("obtengo tooodas las pregunas", questions)
-    Object.keys(absoluteform).map(function(key){
-      var question = questions.find((question) => question.key == key)
-      if (question.type == "number") {
-        absoluteform[key] = parseFloat(absoluteform[key])
+    Object.keys(absoluteform).map(function(name){
+      var question = questions.find((question) => question.name == name)
+      if (question.datatype == "number") {
+        absoluteform[name] = parseFloat(absoluteform[name])
       }
     })
     return absoluteform

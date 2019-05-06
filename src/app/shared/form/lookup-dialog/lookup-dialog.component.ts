@@ -1,11 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { DataService } from 'src/app/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { LookupService } from 'src/app/lookup.service';
-import { lookup } from 'dns';
 
 @Component({
   selector: 'app-lookup-dialog',
@@ -33,7 +30,7 @@ export class LookupDialog implements OnInit {
         {key: "name", label: "Nombre", type: "string"},
         {key: "label", label: "Etiqueta", type: "string"}
       ]
-      this.items=items.items
+      this.items=items
       
     })
   }

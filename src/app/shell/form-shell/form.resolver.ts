@@ -13,23 +13,8 @@ export class FormResolver implements Resolve<any> {
   constructor(private ds: DataService, private router: Router) {}
   sample$:BehaviorSubject<any> = new BehaviorSubject<any>(FormSample["forms"])
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    // let id = route.paramMap.get('item');
     let formname = route.paramMap.get('formname')
-    let company = route.paramMap.get('company')
-    this.ds.setURL(route.data.api + "group" + "/" + company)
-    let customMap = map((val:any) => {
-      let form = val.group
-      if(isDevMode()) console.log("esto es lo que se recibe", form);
-      
-      // if(form.forms) {
-      //   form.forms.forEach(form => {
-      //     form.questions.forEach(question => {
-      //       Object.assign(question, question.custom)
-      //     });
-      //   });
-      // }
-      return form
-    })
-    return customMap(this.ds.searchData(formname))
+
+    return this.ds.getForm(formname)
   }
 }

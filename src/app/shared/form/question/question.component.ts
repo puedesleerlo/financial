@@ -7,6 +7,8 @@ import {FormGroup as FormModel} from "../../../models/form.model"
 import { Conditional } from '../../logic.analizer';
 import { LookupDialog } from '../lookup-dialog/lookup-dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import { LookupService } from 'src/app/lookup.service';
+import { debounceTime, switchMap } from 'rxjs/operators';
 
 export interface Question {
   key: string,
@@ -31,8 +33,13 @@ export class QuestionComponent implements OnChanges {
   @Input() question: Field;
   @Input() form: FormGroup;
   inputControl = new FormControl('')
+  lookupControl = new FormControl('')
   imageSrc: string | ArrayBuffer;
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, public route:ActivatedRoute,) { 
+  filterops = []
+  constructor(public dialog: MatDialog, 
+    private formBuilder: FormBuilder, 
+    public route:ActivatedRoute,
+    private lks:LookupService) { 
   }
 
   get key() {
@@ -51,7 +58,7 @@ export class QuestionComponent implements OnChanges {
   }
 
   ngOnChanges() {
-
+    
   }
   getArrayControl(key) {
     return this.form.get(key) as FormArray;
@@ -86,6 +93,7 @@ export class QuestionComponent implements OnChanges {
       if(isDevMode()) console.log('The dialog was closed', result);
       if(result) {
         console.log("array control", control)
+        console.log("array dialog result", result)
         control.push(result)
       }
       
@@ -151,8 +159,15 @@ export class QuestionComponent implements OnChanges {
     var control = this.form.get(key)
     return control.disabled
   }
-  displayFn(field?: FormModel): string | undefined {
+  displayFn(field?: Field): string | undefined {
     return field ? field.label : undefined;
+  }
+
+  getLookupData(question:Field) {
+    this.lks.getLuItems(question.lookup).subscribe(datos => {
+        this.filterops = datos
+        console.log("lookup", datos)
+    })
   }
 }
 export interface Evento extends Event {

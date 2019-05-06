@@ -12,7 +12,7 @@ import { DataService } from 'src/app/data.service';
 export class QuestionDialog implements OnInit {
   questions: any[] = []
   form: FormGroup
-  item: any
+  item: any = {}
   constructor(
     public dialogRef: MatDialogRef<QuestionDialog>,
     public ds:DataService,
@@ -20,12 +20,8 @@ export class QuestionDialog implements OnInit {
 
   ngOnInit() {
     // this.data.questions.map(val => this.arrayMapping(val));
-    var company = "administracion"
-    var subformid = "newquestion"
-    this.ds.setURL(`forms/${company}/newform`)
-    this.ds.searchData(subformid).subscribe((form:any) => {
-      console.log(form.item.questions)
-      this.questions = form.item.questions
+    this.ds.getQuestion().subscribe((form:any) => {
+      this.questions = form.questions
     })
     // this.questions =  this.data.questions//Es un array
     if(!_.isEmpty(this.data.item)) this.item = this.data.item
@@ -41,11 +37,13 @@ export class QuestionDialog implements OnInit {
     this.dialogRef.close(this.form)
   }
   pushArray(event) {
+    console.log("el formulario es válido", event)
     this.form = event
   }
   get isinValid() {
     if(this.form) return this.form.invalid
-    return true
+    else if (!this.form) return false
+    else return true
   }
 
 }

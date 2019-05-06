@@ -1,8 +1,8 @@
 <h1 class="groupname">{{name}}</h1>
   <mat-vertical-stepper #stepper linear>
-    <mat-step *ngFor="let form of forms" [completed]="isCompleted(form.key)">
+    <mat-step *ngFor="let form of forms" [completed]="isCompleted(form.name)">
         <ng-template matStepLabel>{{form.label}}</ng-template>
-        <app-form [item]="item" [questions]="form.questions" (up)="getForm($event, form.key)"></app-form>
+        <app-form [item]="item" [questions]="form.questions" (up)="getForm($event, form.name)"></app-form>
         <button color="primary" mat-raised-button matStepperNext>Siguiente <mat-icon>arrow_right_alt</mat-icon></button>
     </mat-step>
     <mat-step>

@@ -106,10 +106,10 @@
   </div>
   <div *ngSwitchCase="'autocompleteLookup'">
     <mat-form-field>
-      <input [disabled]="isArrayDisabled(key)" [formControl]="inputControl" type="text" #autocomplete matInput [matAutocomplete]="auto">
+      <input (click)="getLookupData(question)" [disabled]="isArrayDisabled(key)" [formControl]="lookupControl" type="text" #autocomplete matInput [matAutocomplete]="auto">
     </mat-form-field>
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let option of question.options"  [value]="option.name">{{option.label}}</mat-option>
+      <mat-option *ngFor="let option of filterops"  [value]="option">{{option.label}}</mat-option>
     </mat-autocomplete>
   </div>
 <!-- 

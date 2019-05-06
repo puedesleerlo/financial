@@ -3,13 +3,14 @@ import { FormGroup, AbstractControl } from "@angular/forms";
 import { Field } from "../models/model";
 import { Util } from "./util.helper";
 import { isDevMode } from "@angular/core";
+import { FormModel } from "../models/form.model";
 
 export class Conditional {
     grammar = ohm.grammar(logicGrammar)
     semantics = this.grammar.createSemantics()
     form:FormGroup
     formcontrol: AbstractControl
-    question:any
+    question:Field
     purpose:string
     setForm(form) {
         this.form = form
@@ -102,7 +103,7 @@ export class Conditional {
             case "disable":
             if(isDevMode())  console.log("Entra al caso disable");
             
-            var control = self.form.get(self.question.key)
+            var control = self.form.get(self.question.name)
             if (control) {
                 pass ? control.disable() : control.enable()
                 if(isDevMode()) console.log("hay control", control.disabled)
@@ -113,9 +114,9 @@ export class Conditional {
                 break;
             case "exist":
             if(isDevMode()) console.log(self.formcontrol);
-                self.form.removeControl(self.question.key)
-                pass ? self.form.addControl(self.question.key, self.formcontrol): 
-                self.form.removeControl(self.question.key);
+                self.form.removeControl(self.question.name)
+                pass ? self.form.addControl(self.question.name, self.formcontrol): 
+                self.form.removeControl(self.question.name);
                 
 
             default:
@@ -147,11 +148,11 @@ export class Conditional {
             return false
         }
     }
-    constructor(form, question,  purpose) {
+    constructor(form:FormGroup, question:Field,  purpose) {
         this.form = form
         this.question = question
         this.purpose = purpose
-        this.formcontrol = this.form.get(question.key)
+        this.formcontrol = this.form.get(question.name)
         this.operationeval()
     }
         

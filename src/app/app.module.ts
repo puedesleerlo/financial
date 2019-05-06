@@ -31,9 +31,7 @@ import { ViewsModule } from './views/views.module';
     LoginModule,
     HttpClientModule,
     RouterModule.forRoot([
-      {
-        path: '**', redirectTo: '/login'
-      }
+ 
     ]),
     BrowserAnimationsModule,
 

@@ -13,13 +13,6 @@ export class ResolverApi implements Resolve<any> {
  
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any[]> {
     let formname = route.paramMap.get('formname');
-    let company = route.paramMap.get('company');
-    this.ds.setURL(route.data.api + `${company}/${formname}`);
-    console.log(this.ds.getUrl());
-    
-    var forms2Items = map((val: any) => {
-      return val.items
-    });
-    return forms2Items(this.ds.getData())
+    return this.ds.getData(formname)
   }
 }

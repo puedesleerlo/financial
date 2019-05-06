@@ -13,22 +13,9 @@ export class ItemResolver implements Resolve<any> {
   constructor(private ds: DataService, private router: Router) {}
   sample$:BehaviorSubject<any> = new BehaviorSubject<any>(FormSample["forms"])
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    let id = route.paramMap.get('item');
-    let stage = route.parent.paramMap.get('formname')
-    let company = route.parent.paramMap.get('company')
-    this.ds.setURL(route.data.api+company+"/"+stage)
-    let customMap = map((val:any) => {
-      let form = val.item
-      if(isDevMode()) console.log("esto es lo que se recibe en el componente hijo", form);
-      // if(form.forms) {
-      //   form.forms.forEach(form => {
-      //     form.questions.forEach(question => {
-      //       Object.assign(question, question.custom)
-      //     });
-      //   });
-      // }
-      return form
-    })
-    return customMap(this.ds.searchData(id || "newform"))
+    let item = route.paramMap.get('item');
+    let formname = route.parent.paramMap.get('formname')
+
+    return this.ds.getItem(formname, item)
   }
 }

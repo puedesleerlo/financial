@@ -37,22 +37,16 @@ const routes:Routes = [
   {
     path: 'forms/:company/:formname',
     component: CoreComponent,
-    data: {
-      api: "forms/",
-      apiForm: "group"
-    },
     // canActivate: [CanActivateViaAuthGuard],
     resolve: {items: ResolverApi, group: FormResolver}, //Aquí se obtiene el formulario
     children: [
       {
         path: "",
         component: FormShellComponent,
-        data: {api: "forms/"},
         // resolve: {form: FormResolver},
       },
       {
         path: ":item",
-        data: {api: "forms/"},
         component: FormShellComponent,
         resolve: {item: ItemResolver}, //Aquí se obtiene el item
       }

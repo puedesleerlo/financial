@@ -6,6 +6,7 @@ import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { NavigationService } from './navigation.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,7 +24,7 @@ export class DataService {
   constructor(
     private http: HttpClient, 
     public httpErrorHandler: HttpErrorHandler,
-    
+    public nvs:NavigationService
     ) {
     this.handleError = this.httpErrorHandler.createHandleError('DataService');
   }
@@ -45,43 +46,65 @@ export class DataService {
   }
 
   /** GET heroes from the server */
-  getData (): Observable<any[]> {
-    return this.http.get<any[]>(this.url)
+  getData (formname): Observable<any[]> {
+    var company = this.nvs.getCompany()
+    const url = environment.forms + company + "/" + formname
+    let customMap = mapping("items")
+    return customMap(this.http.get<any[]>(url)
       .pipe(
         catchError(this.handleError('getData', []))
-      );
+      ));
   }
 
   /* GET Data whose name contains search term */
-  searchData(term: string): Observable<any[]> {
+  getForm(term: string): Observable<any[]> {
     // console.log(this.url)
     term = term.trim();
-    
+    var company = this.nvs.getCompany()
+    const url = environment.forms + "group/" + company + "/"+ term
     // Add safe, URL encoded search parameter if there is a search term
     const options = term ?
      { params: new HttpParams().set("_id", term) } : {};
-     
-    // return this.http.get<any[]>(this.url, options)
-    //   .pipe(
-    //     catchError(this.handleError<any[]>('searchData', []))
-    //   );
-    return this.http.get<any[]>(this.url + "/"+ term)
+    let customMap = mapping("group")
+    return customMap(this.http.get<any[]>(url)
       .pipe(
         catchError(this.handleError<any[]>('searchData', []))
-      );
+      ));
   }
 
+  getQuestion() {
+    const url = environment.forms + "administracion/newform/newquestion"
+    // Add safe, URL encoded search parameter if there is a search term
+    console.log("holaaaa")
+    let customMap = mapping("item")
+    return customMap(this.http.get<any[]>(url)
+      .pipe(
+        catchError(this.handleError<any[]>('searchData', []))
+      ));
+  }
+
+  getItem(formname, term: string): Observable<any[]> {
+    // console.log(this.url)
+    term = term.trim();
+    var company = this.nvs.getCompany()
+    const url = environment.forms + company +"/" +formname + "/"+ term
+    let customMap = mapping("item")
+    return customMap(this.http.get<any[]>(url)
+      .pipe(
+        catchError(this.handleError<any[]>('searchData', []))
+      ));
+  }
   //////// Save methods //////////
 
   /** POST: add a new hero to the database */
-  addData (data: any): Observable<any> {
-    
-    console.log(this.url + "/new", data);
-    var post = this.http.post<any>(this.url + "/new", data, httpOptions)
+  addData (formname, data: any): Observable<any> {
+    var company = this.nvs.getCompany()
+    const url = environment.forms + company + "/"+ formname + "/new"
+    console.log("Los datos que se enviarán al servidor serán",url, data);
+    var post = this.http.post<any>(url, data, httpOptions)
     .pipe(
-      catchError(this.handleError('addData', data))
-    );
-    
+      catchError(this.handleError('addData', data)
+      ));
     return post
   }
 
@@ -95,9 +118,10 @@ export class DataService {
   }
 
   /** PUT: update the Data on the server. Returns the updated Data upon success. */
-  updateData (id, data: any): Observable<any> {
+  updateData (formname, id, data: any): Observable<any> {
     console.log(data)
-    const url = `${this.url}/${id}`;
+    var company = this.nvs.getCompany()
+    const url = environment.forms + company + "/"+ formname + "/"+id +  "/new"
     return this.http.post<any>(url, data, httpOptions)
       .pipe(
         catchError(this.handleError('updateData', data))
@@ -106,12 +130,13 @@ export class DataService {
 
   lookupData(url:string, company:string): Observable<any> {
     const urlpath = `${environment.api}lookup`;
-    
-    return forms2Items(this.http.post(urlpath, 
+    let customMap = mapping("items")
+    return customMap(this.http.post(urlpath, 
     encodeURIComponent(url+"?company="+company)))
   }
 }
-var forms2Items = map((val: any) => {
-    // console.log("val",val)
-      return val.items
-    });
+var mapping = function(value) {
+return map((val: any) => {
+    return val[value]
+  });
+}
