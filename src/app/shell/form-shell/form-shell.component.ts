@@ -66,10 +66,20 @@ export class FormShellComponent implements OnInit {
     //obtener todas las preguntas
     // var questions = this.forms.map(form => form.questions) //Se obtiene un array de arrays con todas las preguntas
     var formname = this.route.snapshot.parent.paramMap.get("formname")
+    var item = this.route.snapshot.paramMap.get("item")
     var absoluteform = this.prepareData(this.outputValue, this.forms)
-    this.ds.addData(formname, absoluteform).subscribe(resp => {
-      if(resp["status"] == true) this.refresh()
-    })
+    console.log(item)
+    if (item != null) {
+      this.ds.updateData(formname, item, absoluteform).subscribe(resp => {
+          if(resp["status"] == true) this.refresh()
+      })
+    }
+    else {
+      this.ds.addData(formname, absoluteform).subscribe(resp => {
+        if(resp["status"] == true) this.refresh()
+      })
+    }
+    
   }
   refresh(): void {
     setTimeout(() => {
@@ -108,6 +118,7 @@ export class FormShellComponent implements OnInit {
 
     console.log("obtengo tooodas las pregunas", questions)
     Object.keys(absoluteform).map(function(name){
+      console.log(name)
       var question = questions.find((question) => question.name == name)
       if (question.datatype == "number") {
         absoluteform[name] = parseFloat(absoluteform[name])

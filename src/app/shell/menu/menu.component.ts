@@ -46,7 +46,7 @@ export class MenuComponent implements OnInit {
   }
   goTo(link, formname) {
     var path = this.Getlink(link, formname)
-    this.nvs.updateCompany(link.name)
+    // this.nvs.updateCompany(link.name)
     this.router.navigate([path])
   }
 

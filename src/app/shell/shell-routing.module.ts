@@ -8,6 +8,7 @@ import { CoreComponent } from './core/core.component';
 import { FormResolver } from './form-shell/form.resolver';
 import { ItemResolver } from './form-shell/item.resolver';
 import { CanActivateViaAuthGuard } from '../auth/auth.guard';
+import { CanActivateCompany } from '../auth/companies.interceptor';
 const routes:Routes = [
   // {
   //   path: 'admin/:id/:company',
@@ -37,7 +38,7 @@ const routes:Routes = [
   {
     path: 'forms/:company/:formname',
     component: CoreComponent,
-    // canActivate: [CanActivateViaAuthGuard],
+    canActivate: [CanActivateCompany],
     resolve: {items: ResolverApi, group: FormResolver}, //Aquí se obtiene el formulario
     children: [
       {
@@ -63,7 +64,7 @@ const routes:Routes = [
     ResolverApi, 
     AuthRolesGuard, 
     ItemResolver, 
-    CanActivateViaAuthGuard],
+    CanActivateCompany],
   exports: [RouterModule],
   declarations: []
 })

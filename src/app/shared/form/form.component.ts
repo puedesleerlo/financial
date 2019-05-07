@@ -31,7 +31,7 @@ export class FormComponent extends Form implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if(isDevMode()) console.log("AQUÍ HUBO CAMBIOSS")
+    if(isDevMode()) console.log("AQUÍ HUBO CAMBIOSS", this.questions)
     
     this.buildForm(this.patchValue(this.questions, this.item))
 

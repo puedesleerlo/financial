@@ -32,6 +32,7 @@ export interface Question {
 export class QuestionComponent implements OnChanges {
   @Input() question: Field;
   @Input() form: FormGroup;
+  freeinputControl = new FormControl('')
   inputControl = new FormControl('')
   lookupControl = new FormControl('')
   imageSrc: string | ArrayBuffer;
@@ -76,9 +77,18 @@ export class QuestionComponent implements OnChanges {
   addItem(key: string,): void {
     if(isDevMode()) console.log("el valor del item en el array es ", this.inputControl.value)
     let control = <FormArray>this.getArrayControl(key);
+    // let option = {name: this.inputControl.value, label: this.inputControl.value}
     let newcontrol = new FormControl(this.inputControl.value)
     control.push(newcontrol)
     this.inputControl.setValue('')
+  }
+  addFreeItem(key: string,): void {
+    if(isDevMode()) console.log("el valor del item en el array es ", this.freeinputControl.value)
+    let control = <FormArray>this.getArrayControl(key);
+    let option = {name: this.freeinputControl.value, label: this.freeinputControl.value}
+    let newcontrol = new FormControl(option)
+    control.push(newcontrol)
+    this.freeinputControl.setValue('')
   }
   openArrayDialog(question: Field): void {
     let control = this.getArrayControl(question.name) as FormArray;//Le entrega un form array

@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  api: "https://teleforms.telemetrik.com.co/go/",
-  forms: "https://teleforms.telemetrik.com.co/go/forms/",
-  base: "https://teleforms.telemetrik.com.co/",
+  api: "https://administracion.telemetrik.com.co/go/",
+  forms: "https://administracion.telemetrik.com.co/go/forms/",
+  base: "https://administracion.telemetrik.com.co/",
   NODE_TLS_REJECT_UNAUTHORIZED:1
 };
 

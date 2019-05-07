@@ -16,7 +16,8 @@
         <button mat-button [matMenuTriggerFor]="menu">{{ link.label }}</button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="goTo(link, 'newform')">New Form</button>
-          <button mat-menu-item>New Group</button>
+          <button mat-menu-item (click)="goTo(link, 'newgroup')">New Group</button>
+          <button mat-menu-item (click)="goTo(link, 'datasourcegroup')">New Datasource</button>
         </mat-menu>  
       </ng-container>
       <ng-template #elseTemplate>

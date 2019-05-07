@@ -50,8 +50,8 @@ export class Conditional {
               return e.eval()
             },
             PriExp_vari: function(e) {
-              console.log(e.sourceString)
               var control = self.form.get(e.sourceString)
+              console.log("nombre del campo en logic analizer", e.sourceString)
               if(control) return control.value
               else Util.TE("No se encontró el nombre del campo")
               
@@ -99,6 +99,7 @@ export class Conditional {
     runfuntion(pass: boolean) {
         var self = this
         this.question[this.purpose + "d"] = pass
+        console.log("pupose", this.purpose)
         switch (this.purpose) {
             case "disable":
             if(isDevMode())  console.log("Entra al caso disable");
@@ -113,12 +114,10 @@ export class Conditional {
 
                 break;
             case "exist":
-            if(isDevMode()) console.log(self.formcontrol);
+            if(isDevMode()) console.log("Este es el control en exist", self.formcontrol);
                 self.form.removeControl(self.question.name)
                 pass ? self.form.addControl(self.question.name, self.formcontrol): 
                 self.form.removeControl(self.question.name);
-                
-
             default:
                 break;
         }
@@ -126,7 +125,6 @@ export class Conditional {
     activateSubs() {
         this.runfuntion(this.match())
         var m =this.grammar.match(this.question[this.purpose])
-        console.log(m.message)
         if (m.succeeded()) {
           this.semantics(m).subscribers()
           // pass = 
@@ -135,7 +133,6 @@ export class Conditional {
     }
     match() {
         var m =this.grammar.match(this.question[this.purpose])
-        console.log(this.question)
         if (m.succeeded()) {
             
           return this.semantics(m).eval()
@@ -148,7 +145,7 @@ export class Conditional {
             return false
         }
     }
-    constructor(form:FormGroup, question:Field,  purpose) {
+    constructor(form:FormGroup, question:any,  purpose) {
         this.form = form
         this.question = question
         this.purpose = purpose

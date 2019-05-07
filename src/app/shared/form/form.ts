@@ -25,7 +25,9 @@ export abstract class Form {
      }
     buildForm(questions: Field[], globalValidator?) {
         this.questions = questions
+        
         this.form = this.buildGroup(questions, globalValidator);
+        
         this.conditionalSubs()
         // this.conditionalHandler.setForm(this.form)
         if (this.formSub) this.formSub.unsubscribe();
@@ -35,8 +37,10 @@ export abstract class Form {
     }
 
     conditionalSubs() {
+        if(isDevMode()) console.log("preguntas", this.questions);
         this.questions.forEach(field => {
-            // if(isDevMode()) console.log("Empieza a buscar por condiciones", field);
+            if(isDevMode()) console.log("Empieza a buscar por condiciones", field);
+            
             
             if (field.exist) {
                 if(isDevMode()) console.log("Tiene la condición no exist");
