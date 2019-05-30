@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DynvegaComponent } from './dynvega.component';
+import { TableShellComponent } from './table-shell.component';
 
-describe('DynvegaComponent', () => {
-  let component: DynvegaComponent;
-  let fixture: ComponentFixture<DynvegaComponent>;
+describe('TableShellComponent', () => {
+  let component: TableShellComponent;
+  let fixture: ComponentFixture<TableShellComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DynvegaComponent ]
+      declarations: [ TableShellComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DynvegaComponent);
+    fixture = TestBed.createComponent(TableShellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

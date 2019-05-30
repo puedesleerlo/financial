@@ -55,6 +55,25 @@ export class DataService {
         catchError(this.handleError('getData', []))
       ));
   }
+  getDatasourceData (datasource): Observable<any[]> {
+    var company = this.nvs.getCompany()
+    const url = environment.datasources + company + "/" + datasource
+    let customMap = mapping("items")
+    return customMap(this.http.get<any[]>(url)
+      .pipe(
+        catchError(this.handleError('getData', []))
+      ));
+  }
+
+  getStructure(structure): Observable<any[]> {
+    var company = this.nvs.getCompany()
+    const url = environment.structures + company + "/" + structure
+    let customMap = mapping("structure")
+    return customMap(this.http.get<any[]>(url)
+      .pipe(
+        catchError(this.handleError('getData', []))
+      ));
+  }
 
   /* GET Data whose name contains search term */
   getForm(term: string): Observable<any[]> {

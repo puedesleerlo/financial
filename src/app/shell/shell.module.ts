@@ -7,7 +7,6 @@ import { FormShellComponent } from './form-shell/form-shell.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from '../auth/auth.interceptor';
 import { ShellRoutingModule } from './shell-routing.module';
-import { AdminFormComponent } from './admin-form/admin-form.component';
 import { ExcelService } from '../utils/excel.service';
 
 
@@ -26,6 +25,6 @@ import { ExcelService } from '../utils/excel.service';
   },
   ExcelService
   ],
-  declarations: [MenuComponent, CoreComponent, FormShellComponent, AdminFormComponent]
+  declarations: [MenuComponent, CoreComponent, FormShellComponent]
 })
 export class ShellModule { }

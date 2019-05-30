@@ -1,0 +1,42 @@
+<table class="mat-elevation-z8"  mat-table  [dataSource]="dataSource" matSort >
+  <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null; clicked()"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+  <ng-container *ngFor="let column of structure?.columns" [matColumnDef]="column.name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.label}} </th>
+    <td mat-cell *matCellDef="let element">
+      <span [ngSwitch]="column.columntype">
+      <span *ngSwitchCase="'date'">
+          {{element[column.name] | date:'medium'}}
+      </span>
+      <span *ngSwitchCase="'string'">
+          {{element[column.name] | titlecase}}
+      </span>
+      <span *ngSwitchCase="'button'">
+          <button mat-button>{{element[column.name]}}</button>
+      </span>
+      <span *ngSwitchDefault>
+          {{element[column.name]}}
+      </span>
+      </span>
+    </td>
+  </ng-container>
+  <th mat-header-cell *matHeaderCellDef></th>
+  <td mat-cell *matCellDef="let row">
+    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Item 2</button>
+    </mat-menu>
+  </td>
+  <tr mat-header-row *matHeaderRowDef="getColumns()"></tr>
+  <tr mat-row *matRowDef="let row; columns: getColumns();"></tr>
+</table>
+<mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+</mat-paginator>
